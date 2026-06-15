@@ -16,20 +16,20 @@
         "timeout": 300000
       },
       "models": {
-        "deepseek-v4-pro": { "id": "deepseek-v4-pro", "limit": { "context": 300000 } },
-        "deepseek-v4-flash": { "id": "deepseek-v4-flash" },
-        "glm-5.1": { "id": "glm-5.1" },
-        "glm-5": { "id": "glm-5" },
-        "kimi-k2.6": { "id": "kimi-k2.6" },
-        "kimi-k2.5": { "id": "kimi-k2.5" },
-        "mimo-v2.5": { "id": "mimo-v2.5" },
-        "mimo-v2.5-pro": { "id": "mimo-v2.5-pro" },
-        "minimax-m3": { "id": "minimax-m3" },
-        "minimax-m2.7": { "id": "minimax-m2.7" },
-        "minimax-m2.5": { "id": "minimax-m2.5" },
-        "qwen3.7-max": { "id": "qwen3.7-max" },
-        "qwen3.7-plus": { "id": "qwen3.7-plus" },
-        "qwen3.6-plus": { "id": "qwen3.6-plus" }
+        "deepseek-v4-pro": { "id": "deepseek-v4-pro", "limit": { "context": 300000, "output": 32768 } },
+        "deepseek-v4-flash": { "id": "deepseek-v4-flash", "limit": { "context": 300000, "output": 16384 } },
+        "glm-5.1": { "id": "glm-5.1", "limit": { "context": 300000, "output": 32768 } },
+        "glm-5": { "id": "glm-5", "limit": { "context": 300000, "output": 16384 } },
+        "kimi-k2.6": { "id": "kimi-k2.6", "limit": { "context": 300000, "output": 32768 } },
+        "kimi-k2.5": { "id": "kimi-k2.5", "limit": { "context": 300000, "output": 16384 } },
+        "mimo-v2.5": { "id": "mimo-v2.5", "limit": { "context": 300000, "output": 16384 } },
+        "mimo-v2.5-pro": { "id": "mimo-v2.5-pro", "limit": { "context": 300000, "output": 32768 } },
+        "minimax-m3": { "id": "minimax-m3", "limit": { "context": 300000, "output": 16384 } },
+        "minimax-m2.7": { "id": "minimax-m2.7", "limit": { "context": 300000, "output": 16384 } },
+        "minimax-m2.5": { "id": "minimax-m2.5", "limit": { "context": 300000, "output": 16384 } },
+        "qwen3.7-max": { "id": "qwen3.7-max", "limit": { "context": 300000, "output": 32768 } },
+        "qwen3.7-plus": { "id": "qwen3.7-plus", "limit": { "context": 300000, "output": 16384 } },
+        "qwen3.6-plus": { "id": "qwen3.6-plus", "limit": { "context": 300000, "output": 16384 } }
       }
     }
   },

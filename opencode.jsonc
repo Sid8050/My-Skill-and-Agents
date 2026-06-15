@@ -44,7 +44,8 @@
       "permission": {
         "edit": {
           "architect/**": "allow",
-          "*": "ask"
+          "plans/**": "allow",
+          "*": "deny"
         },
         "bash": "deny",
         "skill": {

@@ -1,6 +1,6 @@
 # OpenCode — The Olympus Team
 
-A production-ready OpenCode configuration with three legendary interconnected AI agents and 20 battle-tested skills. Drop this into `~/.config/opencode/` and summon a complete, professional development workflow powered by history's greatest minds.
+A production-ready OpenCode configuration with three legendary interconnected AI agents and 21 battle-tested skills. Drop this into `~/.config/opencode/` and summon a complete, professional development workflow powered by history's greatest minds.
 
 ## Quick Start
 
@@ -20,7 +20,7 @@ git clone https://github.com/Sid8050/My-Skill-and-Agents.git $env:USERPROFILE\.c
 
 ## The Olympus Team
 
-Three legendary agents, each named after history's greatest in their domain. They collaborate through the shared `architect/` folder — a protocol as old as civilization itself.
+Three legendary agents, each named after history's greatest in their domain. They collaborate through two shared folders — `architect/` for greenfield designs and `plans/` for brownfield improvement audits — a protocol as old as civilization itself.
 
 | Agent | Name | Inspiration | Model | Role |
 |-------|------|-------------|-------|------|
@@ -31,11 +31,21 @@ Three legendary agents, each named after history's greatest in their domain. The
 ### The Olympus Protocol
 
 ```
+# Greenfield Workflow (new projects)
 User → Vitruvius → Creates architect/ blueprints (firmitas, utilitas, venustas)
          ↓
      Da Vinci → Reads architect/ → Implements → Self-reviews → Invokes Argus
          ↓
      Argus → Reads architect/ → Hundred-eyed scrutiny → Reports → Da Vinci fixes → Re-test
+         ↓
+     ✅ Fit for Olympus
+
+# Brownfield Workflow (existing codebases)
+User → Vitruvius → Audits codebase via improve skill → Writes plans/ improvement plan
+         ↓
+     Da Vinci → Reads plans/ → Executes improvements → Self-reviews → Invokes Argus
+         ↓
+     Argus → Reads plans/ → Audits against 9-category playbook → Reports → Da Vinci fixes → Re-test
          ↓
      ✅ Fit for Olympus
 ```
@@ -46,28 +56,45 @@ User → Vitruvius → Creates architect/ blueprints (firmitas, utilitas, venust
 
 ### Vitruvius — The Architect
 
-**Purpose:** Convert requirements into crystal-clear architecture blueprints embodying *firmitas* (durability), *utilitas* (utility), and *venustas* (beauty).
+**Purpose:** Vitruvius operates in two modes. In **greenfield** mode he converts requirements into crystal-clear architecture blueprints embodying *firmitas* (durability), *utilitas* (utility), and *venustas* (beauty). In **brownfield** mode he audits existing codebases via the `improve` skill and writes self-contained improvement plans.
 
-**Produces in `architect/` folder:**
+**Produces in `architect/` folder (greenfield — task-based subfolders):**
 ```
 architect/
-├── README.md              # Index + navigation
-├── 01-requirements.md      # Distilled functional/non-functional requirements
-├── 02-architecture.md      # High-level patterns, layers, deployment
-├── 03-tech-stack.md        # Technology choices with justifications
-├── 04-data-model.md        # DB schema, entities, relationships, migrations
-├── 05-api-design.md        # REST/GraphQL endpoints, request/response shapes
-├── 06-component-tree.md    # Frontend hierarchy, state, routing
-├── 07-file-structure.md    # Exact project folder structure
-├── 08-data-flow.md         # Mermaid diagrams for key flows
-├── 09-security.md          # Auth model, threat analysis
-├── 10-test-strategy.md     # Testing pyramid, edge cases
-└── decisions/              # Architecture Decision Records (ADRs)
+├── README.md                   # Master index + navigation
+├── 001-user-auth/
+│   ├── 01-requirements.md
+│   ├── 02-architecture.md
+│   ├── 03-tech-stack.md
+│   ├── 04-data-model.md
+│   ├── 05-api-design.md
+│   ├── 06-component-tree.md
+│   ├── 07-file-structure.md
+│   ├── 08-data-flow.md
+│   ├── 09-security.md
+│   ├── 10-test-strategy.md
+│   └── decisions/
+├── 002-payment/
+│   └── ...
+└── 003-dashboard/
+    └── ...
+```
+
+**Produces in `plans/` folder (brownfield — improvement audits):**
+```
+plans/
+├── README.md                   # Master index of all plans
+├── 001-refactor-auth-layer/
+│   └── plan.md
+├── 002-database-migration/
+│   └── plan.md
+└── 003-api-performance/
+    └── plan.md
 ```
 
 **Key permissions:** Can write `architect/**` freely, bash denied, edit elsewhere requires approval.
 
-**Key skills:** `zoom-out`, `improve-codebase-architecture`, `to-prd`, `grill-with-docs`, `triage`, `teach`, `handoff`, `diagnose`
+**Key skills:** `zoom-out`, `improve`, `improve-codebase-architecture`, `to-prd`, `grill-with-docs`, `triage`, `teach`, `handoff`, `diagnose`
 
 ---
 
@@ -86,7 +113,7 @@ architect/
 - Responsive: mobile-first, tested at 320px/768px/1024px/1440px
 
 **Workflow:**
-1. Reads `architect/README.md` — never skips
+1. Reads `architect/README.md` or `plans/README.md` — never skips
 2. Plans implementation order
 3. Implements methodically, one module at a time
 4. Self-reviews after each module
@@ -95,7 +122,7 @@ architect/
 
 **Pre-commit checklist:** lint + typecheck pass, tests pass, no dead code/TODOs, error boundaries on async ops, input validation at entries, no secrets in code, accessible + responsive.
 
-**Key skills:** `caveman`, `tdd`, `diagnose`, `prototype`, `to-issues`, `grill-me`, `handoff`, `teach`, `git-guardrails-claude-code`, `setup-pre-commit`, `zoom-out`
+**Key skills:** `caveman`, `tdd`, `improve`, `diagnose`, `prototype`, `to-issues`, `grill-me`, `handoff`, `teach`, `git-guardrails-claude-code`, `setup-pre-commit`, `zoom-out`
 
 ---
 
@@ -103,15 +130,26 @@ architect/
 
 **Purpose:** The final guardian. Nothing ships without his hundred-eyed approval. Finds every bug, every edge case, every silent failure before it reaches production.
 
-**The Hundred-Eyed Method:**
-1. Reads `architect/README.md` — understands Vitruvius's vision
-2. Reads relevant architecture docs
+**The Hundred-Eyed Method (9-category audit-playbook):**
+1. Reads `architect/README.md` or `plans/README.md` — understands Vitruvius's vision
+2. Reads relevant architecture docs or improvement plans
 3. Reads Da Vinci's implementation
 4. Identifies test gaps
 5. Writes missing tests (unit, integration, component, E2E)
 6. Runs all tests
-7. Performs manual code review
+7. Performs manual code review against 9 audit categories
 8. Delivers structured report to Da Vinci
+
+**The 9 Audit Categories:**
+1. **Correctness** — Does it match the spec?
+2. **Security** — Injection, auth, secrets, data exposure
+3. **Performance** — N+1 queries, unnecessary re-renders, memory leaks
+4. **Error Handling** — Boundaries, fallbacks, user-facing messages
+5. **Testing** — Coverage gaps, flaky tests, missing edge cases
+6. **Accessibility** — ARIA, keyboard nav, screen readers, contrast
+7. **Responsiveness** — 320px/768px/1024px/1440px breakpoints
+8. **Code Quality** — Type safety, dead code, naming, coupling
+9. **Documentation** — Inline docs, README coverage, ADR freshness
 
 **Bug Severity — The Scale of Olympus:**
 
@@ -134,11 +172,11 @@ architect/
 
 **Sandboxed permissions:** Can only write test files, can only run test/lint commands. Cannot touch source code.
 
-**Key skills:** `diagnose`, `tdd`, `review`, `to-issues`, `caveman`, `handoff`, `zoom-out`
+**Key skills:** `diagnose`, `tdd`, `improve`, `review`, `to-issues`, `caveman`, `handoff`, `zoom-out`
 
 ---
 
-## Skills (20 from [@mattpocock/skills](https://github.com/mattpocock/skills))
+## Skills (21 from [@mattpocock/skills](https://github.com/mattpocock/skills))
 
 Skills are reusable instruction sets that agents load on-demand via the `skill` tool.
 
@@ -157,6 +195,7 @@ Skills are reusable instruction sets that agents load on-demand via the `skill` 
 | `grill-me` | Productivity | Relentless interview about a plan |
 | `review` | In-Progress | Structured code review against specs |
 | `handoff` | Productivity | Compact conversation summary for agent-to-agent handoff |
+| `improve` | Engineering | Audits codebases and writes self-contained improvement plans in `plans/` |
 | `teach` | Productivity | Explain concepts, patterns, and decisions |
 | `write-a-skill` | Productivity | Encode repeatable patterns as new skills |
 | `git-guardrails-claude-code` | Misc | Safe git operations and conventions |
@@ -172,6 +211,7 @@ Skills are reusable instruction sets that agents load on-demand via the `skill` 
 | zoom-out | ✓ | ✓ | ✓ |
 | diagnose | ✓ | ✓ | ✓ |
 | handoff | ✓ | ✓ | ✓ |
+| improve | ✓ | ✓ | ✓ |
 | teach | ✓ | ✓ | |
 | tdd | | ✓ | ✓ |
 | to-issues | | ✓ | ✓ |
@@ -208,7 +248,7 @@ DeepSeek V4 Pro is capped at **300k tokens** (down from 1M) for cost efficiency.
     ├── caveman/SKILL.md
     ├── diagnose/SKILL.md
     ├── tdd/SKILL.md
-    ├── ... (20 total)
+    ├── ... (21 total)
     └── zoom-out/SKILL.md
 ```
 

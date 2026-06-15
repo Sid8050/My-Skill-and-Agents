@@ -57,6 +57,7 @@
           "handoff": "allow",
           "triage": "allow",
           "diagnose": "allow",
+          "improve": "allow",
           "*": "deny"
         }
       }
@@ -84,6 +85,7 @@
           "git-guardrails-claude-code": "allow",
           "setup-pre-commit": "allow",
           "zoom-out": "allow",
+          "improve": "allow",
           "*": "deny"
         }
       }
@@ -121,6 +123,7 @@
           "caveman": "allow",
           "handoff": "allow",
           "zoom-out": "allow",
+          "improve": "allow",
           "*": "deny"
         }
       }

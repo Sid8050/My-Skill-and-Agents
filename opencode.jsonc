@@ -37,7 +37,7 @@
     "backend": { "model": "opencode-go-zen/deepseek-v4-pro" },
     "frontend": { "model": "opencode-go-zen/kimi-k2.6" },
     "think-deep": { "model": "opencode-go-zen/glm-5.1" },
-    "architect": {
+    "vitruvius": {
       "mode": "all",
       "model": "opencode-go-zen/deepseek-v4-pro",
       "temperature": 0.1,
@@ -61,7 +61,7 @@
         }
       }
     },
-    "fullstack-dev": {
+    "da-vinci": {
       "mode": "primary",
       "model": "opencode-go-zen/deepseek-v4-pro",
       "temperature": 0.1,
@@ -69,8 +69,8 @@
         "edit": "allow",
         "bash": "allow",
         "task": {
-          "architect": "allow",
-          "qa-tester": "allow"
+          "vitruvius": "allow",
+          "argus": "allow"
         },
         "skill": {
           "caveman": "allow",
@@ -88,7 +88,7 @@
         }
       }
     },
-    "qa-tester": {
+    "argus": {
       "mode": "subagent",
       "model": "opencode-go-zen/kimi-k2.6",
       "temperature": 0.05,

@@ -1,6 +1,6 @@
-# OpenCode — Elite Agent Team + Skills
+# OpenCode — The Olympus Team
 
-A production-ready OpenCode configuration with three interconnected AI agents and 20 battle-tested skills. Drop this into `~/.config/opencode/` and get a complete, professional development workflow.
+A production-ready OpenCode configuration with three legendary interconnected AI agents and 20 battle-tested skills. Drop this into `~/.config/opencode/` and summon a complete, professional development workflow powered by history's greatest minds.
 
 ## Quick Start
 
@@ -16,113 +16,37 @@ git clone https://github.com/Sid8050/My-Skill-and-Agents.git $env:USERPROFILE\.c
 - Node.js (for npm-based providers)
 - Your provider API keys configured via `/connect` or `opencode.jsonc`
 
-## What's Inside
+---
 
-### Three Interconnected A-Team Agents
+## The Olympus Team
 
-| Agent | Mode | Model | Role |
-|-------|------|-------|------|
-| **Architect** | Primary + Subagent | deepseek-v4-pro | Requirements → Architecture blueprints |
-| **Fullstack Dev** | Primary | deepseek-v4-pro | Reads architect/ → Implements flawlessly |
-| **QA Tester** | Subagent | kimi-k2.6 | Reads architect/ → Tests rigorously |
+Three legendary agents, each named after history's greatest in their domain. They collaborate through the shared `architect/` folder — a protocol as old as civilization itself.
 
-### Shared Workspace Protocol
+| Agent | Name | Inspiration | Model | Role |
+|-------|------|-------------|-------|------|
+| **Vitruvius** | The Architect | Marcus Vitruvius Pollio — Roman architect whose *De Architectura* defined architecture for 2000 years | deepseek-v4-pro | Requirements → Architecture blueprints |
+| **Da Vinci** | The Maker | Leonardo da Vinci — history's greatest polymath, master of art, science, and engineering | deepseek-v4-pro | Reads `architect/` → Implements flawlessly |
+| **Argus** | The Watcher | Argus Panoptes — the hundred-eyed giant of Greek myth whose gaze never slept | kimi-k2.6 | Reads `architect/` → Tests relentlessly |
 
-All three agents collaborate through a shared `architect/` folder at project root. The Architect creates numbered blueprint documents. The Developer and QA tester read them before doing anything.
+### The Olympus Protocol
 
 ```
-User → Architect → Creates architect/ blueprints
+User → Vitruvius → Creates architect/ blueprints (firmitas, utilitas, venustas)
          ↓
-     Fullstack Dev → Reads architect/ → Implements → Self-reviews → Invokes QA
+     Da Vinci → Reads architect/ → Implements → Self-reviews → Invokes Argus
          ↓
-     QA Tester → Reads architect/ → Tests → Reports bugs → Dev fixes → Re-test
+     Argus → Reads architect/ → Hundred-eyed scrutiny → Reports → Da Vinci fixes → Re-test
+         ↓
+     ✅ Fit for Olympus
 ```
 
-### 20 Agent Skills (from [@mattpocock/skills](https://github.com/mattpocock/skills))
+---
 
-Skills are reusable instruction sets that agents load on-demand via the `skill` tool.
+## Agents
 
-| Skill | Category | Best For |
-|-------|----------|----------|
-| `caveman` | Productivity | Ultra-compressed communication, ~75% token savings |
-| `diagnose` | Engineering | Structured debugging loop (reproduce → minimise → hypothesise → fix) |
-| `tdd` | Engineering | Test-driven development with red-green-refactor |
-| `prototype` | Engineering | Rapid throwaway proof-of-concepts before committing to architecture |
-| `zoom-out` | Engineering | High-level codebase map when entering unfamiliar code |
-| `improve-codebase-architecture` | Engineering | Systematic architecture refactoring |
-| `triage` | Engineering | Prioritize issues and requirements |
-| `to-issues` | Engineering | Convert specs/bugs into actionable GitHub issues |
-| `to-prd` | Engineering | Convert requirements into Product Requirements Documents |
-| `grill-with-docs` | Engineering | Verify designs against existing documentation |
-| `grill-me` | Productivity | Relentless interview about a plan until shared understanding |
-| `review` | In-Progress | Structured code review against architecture specs |
-| `handoff` | Productivity | Compact conversation summary for agent-to-agent handoff |
-| `teach` | Productivity | Explain concepts, patterns, and decisions |
-| `write-a-skill` | Productivity | Encode repeatable patterns as new skills |
-| `git-guardrails-claude-code` | Misc | Safe git operations and conventions |
-| `setup-pre-commit` | Misc | Bootstrap pre-commit hooks, linting, formatting |
-| `writing-beats` | In-Progress | Structured beat-by-beat writing format |
-| `writing-fragments` | In-Progress | Composable writing fragments |
-| `writing-shape` | In-Progress | Shape-first writing approach |
+### Vitruvius — The Architect
 
-### Skill-to-Agent Mapping
-
-Each agent has permission-scoped access to relevant skills:
-
-| Skill | Architect | Fullstack Dev | QA Tester |
-|-------|:---------:|:-------------:|:---------:|
-| zoom-out | ✓ | ✓ | ✓ |
-| diagnose | ✓ | ✓ | ✓ |
-| handoff | ✓ | ✓ | ✓ |
-| teach | ✓ | ✓ | |
-| tdd | | ✓ | ✓ |
-| to-issues | | ✓ | ✓ |
-| caveman | | ✓ | ✓ |
-| improve-codebase-architecture | ✓ | | |
-| to-prd | ✓ | | |
-| grill-with-docs | ✓ | | |
-| triage | ✓ | | |
-| write-a-skill | ✓ | | |
-| prototype | | ✓ | |
-| grill-me | | ✓ | |
-| git-guardrails-claude-code | | ✓ | |
-| setup-pre-commit | | ✓ | |
-| review | | | ✓ |
-
-### Context Compaction
-
-DeepSeek V4 Pro is capped at **300k tokens** (down from 1M) for cost efficiency. Auto-compaction is enabled with pruning of old tool outputs. The compaction reserves a 10k token buffer.
-
-```json
-"compaction": {
-  "auto": true,
-  "prune": true,
-  "reserved": 10000
-}
-```
-
-## File Structure
-
-```
-~/.config/opencode/
-├── opencode.jsonc          # Main config: providers, agents, compaction, permissions
-├── agents/
-│   ├── architect.md        # System architect — designs before code
-│   ├── fullstack-dev.md    # Elite fullstack developer — implements flawlessly
-│   └── qa-tester.md        # Relentless QA — tests everything
-└── skills/
-    ├── caveman/SKILL.md
-    ├── diagnose/SKILL.md
-    ├── tdd/SKILL.md
-    ├── ... (20 total)
-    └── zoom-out/SKILL.md
-```
-
-## Agent Deep Dive
-
-### Architect (`architect`)
-
-**Purpose:** Convert requirements into crystal-clear architecture blueprints.
+**Purpose:** Convert requirements into crystal-clear architecture blueprints embodying *firmitas* (durability), *utilitas* (utility), and *venustas* (beauty).
 
 **Produces in `architect/` folder:**
 ```
@@ -143,62 +67,156 @@ architect/
 
 **Key permissions:** Can write `architect/**` freely, bash denied, edit elsewhere requires approval.
 
-### Fullstack Developer (`fullstack-dev`)
+**Key skills:** `zoom-out`, `improve-codebase-architecture`, `to-prd`, `grill-with-docs`, `triage`, `teach`, `handoff`, `diagnose`
 
-**Purpose:** Implement architecture specs with production-grade code.
+---
 
-**Workflow:**
-1. Reads `architect/README.md` — never skips this step
-2. Plans implementation order
-3. Implements methodically, one module at a time
-4. Self-reviews after each module (checklist below)
-5. Invokes `@qa-tester` after logical units
-6. Fixes QA findings and re-tests before continuing
+### Da Vinci — The Maker
 
-**Coding standards enforced:**
+**Purpose:** Implement Vitruvius's architecture specs with production-grade, beautiful code. Masters the full stack — frontend aesthetics, backend precision, database elegance, infrastructure resilience.
+
+**The Da Vinci Code (non-negotiable standards):**
 - Strict TypeScript, no `any`, explicit return types
-- Functional React components, proper state management
+- Functional React components, proper state management (useState/context/zustand/react-query)
 - RESTful APIs with input validation at every boundary
 - Database migrations only, parameterized queries, no N+1
 - 80%+ test coverage on new code
-- Conventional commits, one logical change per commit
 - Handles loading, empty, error, and success states for every component
+- Accessibility: semantic HTML, ARIA labels, keyboard navigation
+- Responsive: mobile-first, tested at 320px/768px/1024px/1440px
 
-**Pre-commit self-review checklist:**
-- Lint + typecheck pass
-- Tests pass
-- No console.log / dead code / TODOs
-- Error boundaries on every async operation
-- Input validation at every entry point
-- No secrets in code
-- Accessibility + responsive design verified
+**Workflow:**
+1. Reads `architect/README.md` — never skips
+2. Plans implementation order
+3. Implements methodically, one module at a time
+4. Self-reviews after each module
+5. Invokes `@argus` after logical units
+6. Fixes Argus's findings and re-tests before continuing
 
-### QA Tester (`qa-tester`)
+**Pre-commit checklist:** lint + typecheck pass, tests pass, no dead code/TODOs, error boundaries on async ops, input validation at entries, no secrets in code, accessible + responsive.
 
-**Purpose:** Find every bug before it reaches production.
+**Key skills:** `caveman`, `tdd`, `diagnose`, `prototype`, `to-issues`, `grill-me`, `handoff`, `teach`, `git-guardrails-claude-code`, `setup-pre-commit`, `zoom-out`
 
-**Reports in structured format:**
-```
-## QA Report — [Module Name]
-### Summary
-- Tests: X passed, Y failed, Z new
-- Bugs: P0=X (critical), P1=Y (high), P2=Z (medium), P3=W (low)
+---
+
+### Argus — The Watcher
+
+**Purpose:** The final guardian. Nothing ships without his hundred-eyed approval. Finds every bug, every edge case, every silent failure before it reaches production.
+
+**The Hundred-Eyed Method:**
+1. Reads `architect/README.md` — understands Vitruvius's vision
+2. Reads relevant architecture docs
+3. Reads Da Vinci's implementation
+4. Identifies test gaps
+5. Writes missing tests (unit, integration, component, E2E)
+6. Runs all tests
+7. Performs manual code review
+8. Delivers structured report to Da Vinci
+
+**Bug Severity — The Scale of Olympus:**
+
+| Level | Name | Meaning |
+|-------|------|---------|
+| **P0** | Titan | Data loss, security breach, crash — Fix immediately |
+| **P1** | Olympian | Broken feature, spec violation — Fix before merge |
+| **P2** | Mortal | Performance, missing error state — Fix next iteration |
+| **P3** | Nymph | Code style, minor UX — Optional |
+
+**Output format:**
+```markdown
+## Argus Report — [Module Name]
+### Verdict: APPROVED / CHANGES REQUIRED / REJECTED
+### Summary (tests run/passed/failed, bugs by severity)
 ### Test Results (table with coverage)
 ### Bugs Found (severity + file + expected/actual + reproduction + fix)
-### Compliance Against Architect/ Specs (requirement-by-requirement)
+### Compliance Against Vitruvius's Specs (requirement-by-requirement)
 ```
-
-**Bug severity classification:**
-- **P0 Critical:** Data loss, security breach, crash, wrong results
-- **P1 High:** Broken feature, missing validation, spec violation
-- **P2 Medium:** Performance, missing error state, accessibility
-- **P3 Low:** Code style, minor UX
 
 **Sandboxed permissions:** Can only write test files, can only run test/lint commands. Cannot touch source code.
 
+**Key skills:** `diagnose`, `tdd`, `review`, `to-issues`, `caveman`, `handoff`, `zoom-out`
+
+---
+
+## Skills (20 from [@mattpocock/skills](https://github.com/mattpocock/skills))
+
+Skills are reusable instruction sets that agents load on-demand via the `skill` tool.
+
+| Skill | Category | Best For |
+|-------|----------|----------|
+| `caveman` | Productivity | Ultra-compressed communication, ~75% token savings |
+| `diagnose` | Engineering | Structured debugging loop (reproduce → minimise → hypothesise → fix) |
+| `tdd` | Engineering | Test-driven development with red-green-refactor |
+| `prototype` | Engineering | Rapid throwaway proof-of-concepts before committing |
+| `zoom-out` | Engineering | High-level codebase map when entering unfamiliar code |
+| `improve-codebase-architecture` | Engineering | Systematic architecture refactoring |
+| `triage` | Engineering | Prioritize issues and requirements |
+| `to-issues` | Engineering | Convert specs/bugs into actionable GitHub issues |
+| `to-prd` | Engineering | Convert requirements into Product Requirements Documents |
+| `grill-with-docs` | Engineering | Verify designs against existing documentation |
+| `grill-me` | Productivity | Relentless interview about a plan |
+| `review` | In-Progress | Structured code review against specs |
+| `handoff` | Productivity | Compact conversation summary for agent-to-agent handoff |
+| `teach` | Productivity | Explain concepts, patterns, and decisions |
+| `write-a-skill` | Productivity | Encode repeatable patterns as new skills |
+| `git-guardrails-claude-code` | Misc | Safe git operations and conventions |
+| `setup-pre-commit` | Misc | Bootstrap pre-commit hooks, linting, formatting |
+| `writing-beats` | In-Progress | Structured beat-by-beat writing format |
+| `writing-fragments` | In-Progress | Composable writing fragments |
+| `writing-shape` | In-Progress | Shape-first writing approach |
+
+### Skill-to-Agent Mapping
+
+| Skill | Vitruvius | Da Vinci | Argus |
+|-------|:---------:|:--------:|:-----:|
+| zoom-out | ✓ | ✓ | ✓ |
+| diagnose | ✓ | ✓ | ✓ |
+| handoff | ✓ | ✓ | ✓ |
+| teach | ✓ | ✓ | |
+| tdd | | ✓ | ✓ |
+| to-issues | | ✓ | ✓ |
+| caveman | | ✓ | ✓ |
+| improve-codebase-architecture | ✓ | | |
+| to-prd | ✓ | | |
+| grill-with-docs | ✓ | | |
+| triage | ✓ | | |
+| write-a-skill | ✓ | | |
+| prototype | | ✓ | |
+| grill-me | | ✓ | |
+| git-guardrails-claude-code | | ✓ | |
+| setup-pre-commit | | ✓ | |
+| review | | | ✓ |
+
+---
+
+## Context Compaction
+
+DeepSeek V4 Pro is capped at **300k tokens** (down from 1M) for cost efficiency. Auto-compaction is enabled with pruning of old tool outputs. The compaction reserves a 10k token buffer.
+
+---
+
+## File Structure
+
+```
+~/.config/opencode/
+├── opencode.jsonc          # Main config: providers, agents, compaction, permissions
+├── agents/
+│   ├── vitruvius.md        # The Architect — designs before code
+│   ├── da-vinci.md         # The Maker — implements flawlessly
+│   └── argus.md            # The Watcher — tests everything
+└── skills/
+    ├── caveman/SKILL.md
+    ├── diagnose/SKILL.md
+    ├── tdd/SKILL.md
+    ├── ... (20 total)
+    └── zoom-out/SKILL.md
+```
+
+---
+
 ## Configuring Your Provider
 
-The default `opencode.jsonc` routes all requests through a local proxy at `localhost:8320`. To use a different provider, update the `provider` section:
+The default `opencode.jsonc` routes through a local proxy at `localhost:8320`. To use a different provider, update the `provider` section:
 
 ```jsonc
 "provider": {
@@ -217,7 +235,9 @@ The default `opencode.jsonc` routes all requests through a local proxy at `local
 }
 ```
 
-Then update agent models to match your provider's model IDs.
+Then update the agent models (search for `model: opencode-go-zen/` in agent files).
+
+---
 
 ## Customization
 
@@ -251,12 +271,14 @@ System prompt content...
 ### Overriding per-project
 Place an `opencode.json` in your project root. It merges with and overrides the global config.
 
+---
+
 ## Credits
 
 - **Skills:** [@mattpocock/skills](https://github.com/mattpocock/skills) — MIT licensed
 - **OpenCode:** [opencode.ai](https://opencode.ai) — The AI-powered coding CLI
-- **Agent designs:** Custom-built for this configuration
+- **Agent designs:** Custom-built for this configuration, named after history's greatest
 
 ## License
 
-MIT — Use, modify, and share freely.
+MIT — Use, modify, and share freely. Summon the Olympus Team.

@@ -1,0 +1,129 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "enabled_providers": ["opencode-go-zen"],
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "reserved": 10000
+  },
+  "provider": {
+    "opencode-go-zen": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "OpenCode Go Zen (via Proxy)",
+      "options": {
+        "baseURL": "http://localhost:8320",
+        "apiKey": "sk-placeholder",
+        "timeout": 300000
+      },
+      "models": {
+        "deepseek-v4-pro": { "id": "deepseek-v4-pro", "limit": { "context": 300000 } },
+        "deepseek-v4-flash": { "id": "deepseek-v4-flash" },
+        "glm-5.1": { "id": "glm-5.1" },
+        "glm-5": { "id": "glm-5" },
+        "kimi-k2.6": { "id": "kimi-k2.6" },
+        "kimi-k2.5": { "id": "kimi-k2.5" },
+        "mimo-v2.5": { "id": "mimo-v2.5" },
+        "mimo-v2.5-pro": { "id": "mimo-v2.5-pro" },
+        "minimax-m3": { "id": "minimax-m3" },
+        "minimax-m2.7": { "id": "minimax-m2.7" },
+        "minimax-m2.5": { "id": "minimax-m2.5" },
+        "qwen3.7-max": { "id": "qwen3.7-max" },
+        "qwen3.7-plus": { "id": "qwen3.7-plus" },
+        "qwen3.6-plus": { "id": "qwen3.6-plus" }
+      }
+    }
+  },
+  "agent": {
+    "backend": { "model": "opencode-go-zen/deepseek-v4-pro" },
+    "frontend": { "model": "opencode-go-zen/kimi-k2.6" },
+    "think-deep": { "model": "opencode-go-zen/glm-5.1" },
+    "architect": {
+      "mode": "all",
+      "model": "opencode-go-zen/deepseek-v4-pro",
+      "temperature": 0.1,
+      "permission": {
+        "edit": {
+          "architect/**": "allow",
+          "*": "ask"
+        },
+        "bash": "deny",
+        "skill": {
+          "zoom-out": "allow",
+          "improve-codebase-architecture": "allow",
+          "to-prd": "allow",
+          "grill-with-docs": "allow",
+          "write-a-skill": "allow",
+          "teach": "allow",
+          "handoff": "allow",
+          "triage": "allow",
+          "diagnose": "allow",
+          "*": "deny"
+        }
+      }
+    },
+    "fullstack-dev": {
+      "mode": "primary",
+      "model": "opencode-go-zen/deepseek-v4-pro",
+      "temperature": 0.1,
+      "permission": {
+        "edit": "allow",
+        "bash": "allow",
+        "task": {
+          "architect": "allow",
+          "qa-tester": "allow"
+        },
+        "skill": {
+          "caveman": "allow",
+          "tdd": "allow",
+          "diagnose": "allow",
+          "prototype": "allow",
+          "to-issues": "allow",
+          "grill-me": "allow",
+          "handoff": "allow",
+          "teach": "allow",
+          "git-guardrails-claude-code": "allow",
+          "setup-pre-commit": "allow",
+          "zoom-out": "allow",
+          "*": "deny"
+        }
+      }
+    },
+    "qa-tester": {
+      "mode": "subagent",
+      "model": "opencode-go-zen/kimi-k2.6",
+      "temperature": 0.05,
+      "permission": {
+        "edit": {
+          "**/*.test.*": "allow",
+          "**/*.spec.*": "allow",
+          "**/__tests__/**": "allow",
+          "**/tests/**": "allow",
+          "*": "deny"
+        },
+        "bash": {
+          "npm test*": "allow",
+          "npm run test*": "allow",
+          "npx vitest*": "allow",
+          "npx jest*": "allow",
+          "pytest*": "allow",
+          "go test*": "allow",
+          "cargo test*": "allow",
+          "npm run lint*": "allow",
+          "npm run typecheck*": "allow",
+          "npx tsc*": "allow",
+          "*": "deny"
+        },
+        "skill": {
+          "diagnose": "allow",
+          "tdd": "allow",
+          "review": "allow",
+          "to-issues": "allow",
+          "caveman": "allow",
+          "handoff": "allow",
+          "zoom-out": "allow",
+          "*": "deny"
+        }
+      }
+    }
+  }
+}

@@ -100,6 +100,7 @@ plans/
 4. Numbers are **monotonic and never reused**. If abandoned, mark in index.
 5. Cross-item dependencies documented in the master index.
 6. For brownfield audits via `improve` skill: use its methodology for auditing, but use THIS folder convention for output.
+7. **IMPORTANT — the `improve` skill's plan-template may suggest flat `.md` files. IGNORE that. You create subfolders: `plans/NNN-slug/plan.md` + `plans/NNN-slug/findings.md`. Never a .md file directly in `plans/` root.**
 
 ### Master Index Template
 

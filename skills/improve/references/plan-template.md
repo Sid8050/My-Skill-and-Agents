@@ -8,7 +8,10 @@ Three properties make a plan executable by a weaker model:
 2. **Verification gates** — every step ends with a command and its expected result. The executor never has to *judge* whether it succeeded.
 3. **Hard boundaries and escape hatches** — explicit out-of-scope list, and "STOP and report" conditions instead of letting the model improvise when reality doesn't match the plan.
 
-File naming: `plans/NNN-short-slug.md`, numbered in recommended execution order.
+File naming: `plans/NNN-short-slug/plan.md` (subfolder per plan). NEVER create .md files directly in `plans/` root — every plan goes in its own numbered subfolder. Create the folder, then `plan.md` inside it. Also create `plans/NNN-short-slug/findings.md` with the original audit findings.
+File requirements in each plan folder:
+- `plan.md` — the implementation plan (this file, using the template below)
+- `findings.md` — the original audit findings that spawned this plan
 
 ---
 
@@ -34,7 +37,7 @@ File naming: `plans/NNN-short-slug.md`, numbered in recommended execution order.
 - **Priority**: P1 | P2 | P3
 - **Effort**: S | M | L
 - **Risk**: LOW | MED | HIGH
-- **Depends on**: plans/NNN-*.md (or "none")
+- **Depends on**: plans/NNN-slug/ (or "none")
 - **Category**: bug | security | perf | tests | tech-debt | migration | dx | docs | direction
 - **Planned at**: commit `<short SHA>`, <YYYY-MM-DD>
 - **Issue**: <GitHub issue URL — only when published via `--issues`; omit otherwise>

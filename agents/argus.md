@@ -1,7 +1,7 @@
 ---
 description: Argus — relentless QA engineer with the gaze of a hundred eyes who rigorously tests implementations against architecture specs, finds every bug, and validates correctness with comprehensive test coverage
 mode: subagent
-model: opencode-go-zen/kimi-k2.6
+model: opencode-go-zen/glm-5.2
 temperature: 0.05
 color: "#dc2626"
 permission:

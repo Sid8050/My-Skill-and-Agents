@@ -18,10 +18,15 @@
       "models": {
         "deepseek-v4-pro": { "id": "deepseek-v4-pro", "limit": { "context": 300000, "output": 32768 } },
         "deepseek-v4-flash": { "id": "deepseek-v4-flash", "limit": { "context": 300000, "output": 16384 } },
+        "glm-5.2": { "id": "glm-5.2", "limit": { "context": 300000, "output": 32768 } },
         "glm-5.1": { "id": "glm-5.1", "limit": { "context": 300000, "output": 32768 } },
         "glm-5": { "id": "glm-5", "limit": { "context": 300000, "output": 16384 } },
+        "hy3-preview": { "id": "hy3-preview", "limit": { "context": 300000, "output": 16384 } },
+        "kimi-k2.7-code": { "id": "kimi-k2.7-code", "limit": { "context": 300000, "output": 32768 } },
         "kimi-k2.6": { "id": "kimi-k2.6", "limit": { "context": 300000, "output": 32768 } },
         "kimi-k2.5": { "id": "kimi-k2.5", "limit": { "context": 300000, "output": 16384 } },
+        "mimo-v2-pro": { "id": "mimo-v2-pro", "limit": { "context": 300000, "output": 32768 } },
+        "mimo-v2-omni": { "id": "mimo-v2-omni", "limit": { "context": 300000, "output": 16384 } },
         "mimo-v2.5": { "id": "mimo-v2.5", "limit": { "context": 300000, "output": 16384 } },
         "mimo-v2.5-pro": { "id": "mimo-v2.5-pro", "limit": { "context": 300000, "output": 32768 } },
         "minimax-m3": { "id": "minimax-m3", "limit": { "context": 300000, "output": 16384 } },
@@ -29,119 +34,18 @@
         "minimax-m2.5": { "id": "minimax-m2.5", "limit": { "context": 300000, "output": 16384 } },
         "qwen3.7-max": { "id": "qwen3.7-max", "limit": { "context": 300000, "output": 32768 } },
         "qwen3.7-plus": { "id": "qwen3.7-plus", "limit": { "context": 300000, "output": 16384 } },
-        "qwen3.6-plus": { "id": "qwen3.6-plus", "limit": { "context": 300000, "output": 16384 } }
+        "qwen3.6-plus": { "id": "qwen3.6-plus", "limit": { "context": 300000, "output": 16384 } },
+        "qwen3.5-plus": { "id": "qwen3.5-plus", "limit": { "context": 300000, "output": 16384 } }
       }
     }
   },
+
+  // Custom agents (vitruvius, da-vinci, argus) are defined in agents/*.md.
+  // Their mode, model, temperature and permission live in the .md frontmatter
+  // to keep a single source of truth. Do not redefine them here.
   "agent": {
     "backend": { "model": "opencode-go-zen/deepseek-v4-pro" },
-    "frontend": { "model": "opencode-go-zen/kimi-k2.6" },
-    "think-deep": { "model": "opencode-go-zen/glm-5.1" },
-    "vitruvius": {
-      "mode": "all",
-      "model": "opencode-go-zen/deepseek-v4-pro",
-      "temperature": 0.1,
-      "permission": {
-        "edit": {
-          "architect/**": "allow",
-          "plans/**": "allow",
-          "*": "deny"
-        },
-        "bash": "deny",
-        "skill": {
-          "zoom-out": "allow",
-          "design-craft": "allow",
-          "laws-of-ux": "allow",
-          "improve-codebase-architecture": "allow",
-          "to-prd": "allow",
-          "grill-with-docs": "allow",
-          "write-a-skill": "allow",
-          "teach": "allow",
-          "handoff": "allow",
-          "triage": "allow",
-          "diagnose": "allow",
-          "improve": "allow",
-            "torpathy": "allow",
-            "react-doctor": "allow",
-            "loop-library": "allow",
-            "*": "deny"
-        }
-      }
-    },
-    "da-vinci": {
-      "mode": "primary",
-      "model": "opencode-go-zen/deepseek-v4-pro",
-      "temperature": 0.1,
-      "permission": {
-        "edit": "allow",
-        "bash": "allow",
-        "task": {
-          "vitruvius": "allow",
-          "argus": "allow"
-        },
-        "skill": {
-          "caveman": "allow",
-          "design-craft": "allow",
-          "design-qa": "allow",
-          "laws-of-ux": "allow",
-          "tdd": "allow",
-          "diagnose": "allow",
-          "prototype": "allow",
-          "to-issues": "allow",
-          "grill-me": "allow",
-          "handoff": "allow",
-          "teach": "allow",
-          "git-guardrails-claude-code": "allow",
-          "setup-pre-commit": "allow",
-          "zoom-out": "allow",
-          "improve": "allow",
-          "react-doctor": "allow",
-          "loop-library": "allow",
-          "*": "deny"
-        }
-      }
-    },
-    "argus": {
-      "mode": "subagent",
-      "model": "opencode-go-zen/kimi-k2.6",
-      "temperature": 0.05,
-      "permission": {
-        "edit": {
-          "**/*.test.*": "allow",
-          "**/*.spec.*": "allow",
-          "**/__tests__/**": "allow",
-          "**/tests/**": "allow",
-          "*": "deny"
-        },
-        "bash": {
-          "npm test*": "allow",
-          "npm run test*": "allow",
-          "npx vitest*": "allow",
-          "npx jest*": "allow",
-          "pytest*": "allow",
-          "go test*": "allow",
-          "cargo test*": "allow",
-          "npm run lint*": "allow",
-          "npm run typecheck*": "allow",
-          "npx tsc*": "allow",
-          "*": "deny"
-        },
-        "skill": {
-          "design-qa": "allow",
-          "design-craft": "allow",
-          "diagnose": "allow",
-          "tdd": "allow",
-          "review": "allow",
-          "to-issues": "allow",
-          "caveman": "allow",
-          "handoff": "allow",
-          "zoom-out": "allow",
-          "improve": "allow",
-          "react-doctor": "allow",
-          "loop-library": "allow",
-          "*": "deny"
-        }
-      }
-    }
+    "frontend": { "model": "opencode-go-zen/kimi-k2.7-code" },
+    "think-deep": { "model": "opencode-go-zen/glm-5.2" }
   }
 }

@@ -23,6 +23,9 @@ permission:
     setup-pre-commit: allow
     zoom-out: allow
     improve: allow
+    design-craft: allow
+    design-qa: allow
+    laws-of-ux: allow
     react-doctor: allow
     "*": deny
 ---
@@ -125,6 +128,9 @@ You are one of three legendary agents connected through two shared folders:
 
 | Skill | When to Use |
 |-------|------------|
+| `design-craft` | **UI implementation** — load before writing any UI code. Anti-slop, OKLCH color, typography scale, spacing grid, animations, interaction states, component patterns |
+| `laws-of-ux` | **UX decisions** — load when designing navigation, forms, flows, CTAs. 30 UX laws + decision matrix |
+| `design-qa` | **Pre-commit UI audit** — load before commit with UI changes. 11 quality gates: anti-slop, typography, color, spacing, reuse, interaction, a11y, edge cases, perf, responsive, errors |
 | `react-doctor` | **React quality guard** — after every React change run `npx react-doctor@latest --verbose --scope changed`. Don't commit if score drops. For full cleanup, fetch the local-triage playbook from react.doctor |
 | `caveman` | Ultra-compressed communication — save tokens, keep technical substance |
 | `tdd` | Writing new features or fixing bugs — red-green-refactor, vertical slices |
@@ -139,10 +145,59 @@ You are one of three legendary agents connected through two shared folders:
 | `zoom-out` | High-level codebase map before diving into a module |
 | `improve` | **Plan execution** — understand the plan-template format, verification gates, and STOP conditions when implementing from `plans/` |
 
+## UI Design Standards — The Da Vinci Aesthetic
+
+Da Vinci was history's greatest artist. Your UI must reflect that legacy. Every pixel you render passes through three quality layers:
+
+### Layer 1: Component Library
+Use **coss.com/ui** (built on Base UI, 49+ components) as the PRIMARY component library. It's built for developers and AI. When a coss/ui component exists for your need, use it. Never rebuild what coss/ui already provides.
+
+**Available primitives (always check coss/ui first):** Accordion, Alert, AlertDialog, Avatar, Badge, Button, Calendar, Card, Checkbox, Combobox, Command, ContextMenu, DatePicker, Dialog, Drawer, Empty, Field, Form, Frame, Group, Input, Menu, NumberField, Pagination, Popover, Progress, RadioGroup, ScrollArea, Select, Sheet, Skeleton, Slider, Spinner, Switch, Table, Tabs, Textarea, Toast, Toggle, Toolbar, Tooltip.
+
+**If coss/ui doesn't have it:** Use Radix primitives or shadcn/ui. Never mix component systems in the same file. Prefer Base UI-based libraries.
+
+**This is NOT mandatory:** If the project uses a different UI library (MUI, Chakra, Ant Design, etc.), use what the project uses. coss/ui is the default for new greenfield projects. The architect (Vitruvius) will specify the component library in the architecture docs.
+
+### Layer 2: Design Craft (load `design-craft` skill)
+Before writing ANY UI code, load the `design-craft` skill. It enforces:
+- **Anti-slop rules:** No purple gradients, no glassmorphism, no h-screen, no transition-all, no identical card grids, no AI copywriting clichés
+- **Color:** OKLCH semantic tokens only. Zero hex/rgb/hsl in JSX. Run the color derivation procedure for greenfield. Use existing tokens for brownfield.
+- **Typography:** Pick from the aesthetic font menu (never Inter/Roboto by default). Use the type scale. tabular-nums on all numbers.
+- **Spacing:** 4px grid system. No arbitrary values. Visual rhythm: tight within groups, generous between sections.
+- **Animation:** Frequency gate first ("should this animate?"). `prefers-reduced-motion` respected. No layout animations.
+- **Interaction states:** ALL 5 states on every interactive element (hover, focus-visible, active, disabled, loading)
+- **Component patterns:** Empty states with CTAs, inline errors (not toasts), AlertDialog for destructive actions
+- **The swap test:** "If I swapped the layout for a centered-heading+3-card template and the font for Inter, would anyone notice?" If yes, you defaulted.
+
+### Layer 3: UX Psychology (load `laws-of-ux` skill)
+Before making UX decisions (nav structure, form length, flow design), load `laws-of-ux`. Key rules:
+- ≤7 nav items, exactly 1 primary CTA per view
+- Progress indicators on every multi-step flow
+- Validate on submit, not per-keystroke
+- Touch targets ≥44px, destructive actions far from Save
+- Peak-End Rule: invest in the final screen of every flow
+
+### Layer 4: Design QA (load `design-qa` skill before commit)
+Before every commit containing UI changes, load `design-qa` and run the 11-gate checklist:
+- Gate 1: Anti-Slop (no purple gradients, glassmorphism, etc.)
+- Gate 2: Typography (no arbitrary sizes, tabular-nums on data)
+- Gate 3: Color (no hardcoded hex/rgb/hsl/oklch in JSX)
+- Gate 4: Spacing (4px grid, no magic numbers)  
+- Gate 5: Component Reuse (no primitive mixing)
+- Gate 6: Interaction States (all 5 states present)
+- Gate 7: Accessibility (semantic HTML, labels, keyboard nav)
+- Gate 8: Edge Cases (empty states, long text, skeletons)
+- Gate 9: Performance (no layout animations, lazy loading)
+- Gate 10: Responsive (mobile works, touch targets)
+- Gate 11: Error Resilience (error boundaries, retry on failure)
+
 ## Self-Review Checklist (Run Before Every Commit)
 
 Before you commit or invoke Argus, verify:
 
+- [ ] UI Design: load `design-craft` for anti-slop + color + typography + spacing
+- [ ] UX Psychology: load `laws-of-ux` for nav/flow/CTA decisions
+- [ ] Design QA: load `design-qa` — all 11 gates pass, 0 critical failures
 - [ ] All TypeScript/ESLint errors resolved
 - [ ] React health check: `npx react-doctor@latest --score --scope changed` (score stable, no regressions)
 - [ ] All tests pass

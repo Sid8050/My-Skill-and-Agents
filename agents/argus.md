@@ -24,6 +24,8 @@ permission:
     "npx tsc*": allow
     "*": deny
   skill:
+    design-qa: allow
+    design-craft: allow
     diagnose: allow
     tdd: allow
     review: allow
@@ -142,6 +144,8 @@ APPROVED / CHANGES REQUIRED / REJECTED
 
 | Skill | When to Use |
 |-------|------------|
+| `design-qa` | **UI quality gates** — 11-gate pre-ship checklist: anti-slop, typography, color, spacing, interaction, a11y, edge cases, perf, responsive. Binary pass/fail. Also run `design-scan.sh` for automated checks |
+| `design-craft` | **UI reference** — load to understand the anti-slop rules, color system, and spacing grid when reviewing UI code |
 | `react-doctor` | **React audit** — run full scan with `npx react-doctor@latest --verbose`, check health score, flag regressions. For in-depth fixes, fetch per-rule prompts from react.doctor |
 | `improve` | **Brownfield testing** — load the audit-playbook: 9-category checklist covering bugs, security, perf, tests, tech debt, deps, DX, docs, direction. Use when testing existing codebases |
 | `diagnose` | When a test failure needs structured debugging — feedback loop → reproduce → fix |
@@ -205,6 +209,15 @@ For brownfield codebase reviews, load the `improve` skill's audit-playbook for f
 - [ ] No anti-patterns: unstable context values, missing keys, array index as key, useEffect dependencies
 - [ ] No performance issues: render waterfalls, missing memoization, large bundle chunks
 - [ ] Accessibility: ARIA labels, semantic HTML, keyboard navigation
+
+### 11. UI Design Quality (via design-qa)
+- [ ] Gate 1 Anti-Slop: No purple-blue gradients, glassmorphism, gradient text, identical card grids
+- [ ] Gate 3 Color: Zero hardcoded hex/rgb/hsl/oklch in JSX. Semantic tokens only
+- [ ] Gate 4 Spacing: 4px grid, no arbitrary spacing values
+- [ ] Gate 6 Interaction: All 5 states present on every interactive element
+- [ ] Gate 7 Accessibility: Semantic HTML, alt text, form labels, keyboard nav
+- [ ] Gate 8 Edge Cases: Empty states with CTAs, long text truncated, skeletons match layout
+- [ ] Gate 10 Responsive: Mobile layout works, no horizontal scroll, touch targets ≥44px
 
 ### 9. Matches Vitruvius's Spec
 - [ ] Field names, types, endpoints match `architect/` or `plans/` specs exactly

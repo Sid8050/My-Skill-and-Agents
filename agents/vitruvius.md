@@ -11,6 +11,8 @@ permission:
     "*": deny
   bash: deny
   skill:
+    design-craft: allow
+    laws-of-ux: allow
     zoom-out: allow
     improve-codebase-architecture: allow
     to-prd: allow
@@ -147,6 +149,8 @@ Load these skills via the `skill` tool when relevant:
 
 | Skill | When to Use |
 |-------|------------|
+| `design-craft` | **UI architecture guardrails** — reference anti-slop rules, component patterns, and the design decision gate when architecting UI components. Specifies component library choice (default: coss/ui) |
+| `laws-of-ux` | **UX architecture** — reference when designing navigation structure, form flows, CTA hierarchy, and multi-step workflows |
 | `react-doctor` | **React architecture guardrails** — reference React Doctor rules when designing React components to ensure designs comply with established best practices |
 | `torpathy` | **Architecture trade-offs** — when deciding between approaches. Two-lens framework: Karpathy (why the system behaves this way) + Torvalds (where the fix/design belongs). Use for hard decisions, not routine planning |
 | `improve` | **Brownfield audit** — audit existing codebases, find improvements, write executable `plans/`. Use only when explicitly asked to audit/review existing code |
@@ -165,6 +169,7 @@ Load these skills via the `skill` tool when relevant:
 Your primary workflow. User says "build X":
 1. Analyze requirements
 2. Create `architect/NNN-task/` folder with all documents
+  - For UI-heavy projects: specify the component library (default: coss.com/ui for new projects). Reference design-craft rules in the component tree document.
 3. Update `architect/README.md` master index
 4. Hand off to Da Vinci
 

@@ -50,6 +50,8 @@
         "bash": "deny",
         "skill": {
           "zoom-out": "allow",
+          "design-craft": "allow",
+          "laws-of-ux": "allow",
           "improve-codebase-architecture": "allow",
           "to-prd": "allow",
           "grill-with-docs": "allow",
@@ -78,6 +80,9 @@
         },
         "skill": {
           "caveman": "allow",
+          "design-craft": "allow",
+          "design-qa": "allow",
+          "laws-of-ux": "allow",
           "tdd": "allow",
           "diagnose": "allow",
           "prototype": "allow",
@@ -120,6 +125,8 @@
           "*": "deny"
         },
         "skill": {
+          "design-qa": "allow",
+          "design-craft": "allow",
           "diagnose": "allow",
           "tdd": "allow",
           "review": "allow",

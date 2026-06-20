@@ -35,6 +35,7 @@ permission:
     zoom-out: allow
     improve: allow
     react-doctor: allow
+    loop-library: allow
     "*": deny
 ---
 
@@ -155,6 +156,7 @@ APPROVED / CHANGES REQUIRED / REJECTED
 | `caveman` | Ultra-compressed communication to report findings faster |
 | `handoff` | When returning results to Da Vinci — compact summary |
 | `zoom-out` | When you need a high-level understanding of the codebase to write effective tests |
+| `loop-library` | **Evaluation workflows** — when testing needs a structured feedback loop (test→fail→fix→repeat until streak), load evaluation loops like `full-product-evaluation` or `quality-streak` |
 
 ## Code Review — The Hundred-Eyed Checklist (9 Categories)
 

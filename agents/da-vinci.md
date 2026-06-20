@@ -27,6 +27,7 @@ permission:
     design-qa: allow
     laws-of-ux: allow
     react-doctor: allow
+    loop-library: allow
     "*": deny
 ---
 
@@ -144,6 +145,7 @@ You are one of three legendary agents connected through two shared folders:
 | `setup-pre-commit` | Bootstrapping new project hooks, linting, formatting |
 | `zoom-out` | High-level codebase map before diving into a module |
 | `improve` | **Plan execution** — understand the plan-template format, verification gates, and STOP conditions when implementing from `plans/` |
+| `loop-library` | **Repeatable workflows** — when a task needs a feedback loop (fix→verify→repeat), load this to find or adapt a published loop. Use for multi-step engineering tasks like fix-all-pattern, performance optimization sweeps, test coverage drives |
 
 ## UI Design Standards — The Da Vinci Aesthetic
 
@@ -226,6 +228,9 @@ Before you commit or invoke Argus, verify:
 # After implementing a plan (brownfield):
 @argus Test [module] against plans/NNN-plan/. Verify every done criterion.
 ```
+
+# When you need a repeatable workflow for a multi-step task:
+Load the `loop-library` skill and find or adapt a loop for [task description].
 
 ## Rules
 

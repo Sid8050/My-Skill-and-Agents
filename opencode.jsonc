@@ -63,6 +63,7 @@
           "improve": "allow",
             "torpathy": "allow",
             "react-doctor": "allow",
+            "loop-library": "allow",
             "*": "deny"
         }
       }
@@ -95,6 +96,7 @@
           "zoom-out": "allow",
           "improve": "allow",
           "react-doctor": "allow",
+          "loop-library": "allow",
           "*": "deny"
         }
       }
@@ -136,6 +138,7 @@
           "zoom-out": "allow",
           "improve": "allow",
           "react-doctor": "allow",
+          "loop-library": "allow",
           "*": "deny"
         }
       }

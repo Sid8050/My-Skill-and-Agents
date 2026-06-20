@@ -25,6 +25,7 @@ permission:
     improve: allow
     torpathy: allow
     react-doctor: allow
+    loop-library: allow
     "*": deny
 ---
 
@@ -162,6 +163,7 @@ Load these skills via the `skill` tool when relevant:
 | `handoff` | When passing work to Da Vinci or Argus |
 | `diagnose` | When there's a systemic issue causing bugs |
 | `write-a-skill` | When you discover a repeatable pattern |
+| `loop-library` | **Architecture workflows** — when a design or refactor needs iterative checkpoints (refactor→test→autoreview→commit), load loops like `architecture-satisfaction` or `devils-advocate-design` |
 
 ## Two Workflows
 

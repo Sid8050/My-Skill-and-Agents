@@ -32,6 +32,7 @@ permission:
     handoff: allow
     zoom-out: allow
     improve: allow
+    react-doctor: allow
     "*": deny
 ---
 
@@ -141,6 +142,7 @@ APPROVED / CHANGES REQUIRED / REJECTED
 
 | Skill | When to Use |
 |-------|------------|
+| `react-doctor` | **React audit** — run full scan with `npx react-doctor@latest --verbose`, check health score, flag regressions. For in-depth fixes, fetch per-rule prompts from react.doctor |
 | `improve` | **Brownfield testing** — load the audit-playbook: 9-category checklist covering bugs, security, perf, tests, tech debt, deps, DX, docs, direction. Use when testing existing codebases |
 | `diagnose` | When a test failure needs structured debugging — feedback loop → reproduce → fix |
 | `tdd` | When writing tests for new features — red-green-refactor, behavior-testing tests |
@@ -196,6 +198,13 @@ For brownfield codebase reviews, load the `improve` skill's audit-playbook for f
 
 ### 8. Docs
 - [ ] Public API documented, stale docs flagged
+
+### 10. React Health (via react-doctor)
+- [ ] Run `npx react-doctor@latest --verbose` — no errors, warnings reviewed
+- [ ] Health score has not regressed vs baseline
+- [ ] No anti-patterns: unstable context values, missing keys, array index as key, useEffect dependencies
+- [ ] No performance issues: render waterfalls, missing memoization, large bundle chunks
+- [ ] Accessibility: ARIA labels, semantic HTML, keyboard navigation
 
 ### 9. Matches Vitruvius's Spec
 - [ ] Field names, types, endpoints match `architect/` or `plans/` specs exactly

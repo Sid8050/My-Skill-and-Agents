@@ -22,6 +22,7 @@ permission:
     diagnose: allow
     improve: allow
     torpathy: allow
+    react-doctor: allow
     "*": deny
 ---
 
@@ -146,6 +147,7 @@ Load these skills via the `skill` tool when relevant:
 
 | Skill | When to Use |
 |-------|------------|
+| `react-doctor` | **React architecture guardrails** — reference React Doctor rules when designing React components to ensure designs comply with established best practices |
 | `torpathy` | **Architecture trade-offs** — when deciding between approaches. Two-lens framework: Karpathy (why the system behaves this way) + Torvalds (where the fix/design belongs). Use for hard decisions, not routine planning |
 | `improve` | **Brownfield audit** — audit existing codebases, find improvements, write executable `plans/`. Use only when explicitly asked to audit/review existing code |
 | `zoom-out` | When you need broader context on a codebase before designing |

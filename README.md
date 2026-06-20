@@ -1,6 +1,6 @@
 # OpenCode — The Olympus Team
 
-A production-ready OpenCode configuration with three legendary interconnected AI agents and 21 battle-tested skills. Drop this into `~/.config/opencode/` and summon a complete, professional development workflow powered by history's greatest minds.
+A production-ready OpenCode configuration with three legendary interconnected AI agents and 23 battle-tested skills. Drop this into `~/.config/opencode/` and summon a complete, professional development workflow powered by history's greatest minds.
 
 ## Quick Start
 
@@ -120,9 +120,9 @@ plans/
 5. Invokes `@argus` after logical units
 6. Fixes Argus's findings and re-tests before continuing
 
-**Pre-commit checklist:** lint + typecheck pass, tests pass, no dead code/TODOs, error boundaries on async ops, input validation at entries, no secrets in code, accessible + responsive.
+**Pre-commit checklist:** react-doctor health score stable + no regressions, lint + typecheck pass, tests pass, no dead code/TODOs, error boundaries on async ops, input validation at entries, no secrets in code, accessible + responsive.
 
-**Key skills:** `caveman`, `tdd`, `improve`, `diagnose`, `prototype`, `to-issues`, `grill-me`, `handoff`, `teach`, `git-guardrails-claude-code`, `setup-pre-commit`, `zoom-out`
+**Key skills:** `caveman`, `tdd`, `improve`, `diagnose`, `prototype`, `to-issues`, `grill-me`, `handoff`, `teach`, `git-guardrails-claude-code`, `setup-pre-commit`, `zoom-out`, `react-doctor`
 
 ---
 
@@ -130,17 +130,17 @@ plans/
 
 **Purpose:** The final guardian. Nothing ships without his hundred-eyed approval. Finds every bug, every edge case, every silent failure before it reaches production.
 
-**The Hundred-Eyed Method (9-category audit-playbook):**
+**The Hundred-Eyed Method (10-category audit-playbook):**
 1. Reads `architect/README.md` or `plans/README.md` — understands Vitruvius's vision
 2. Reads relevant architecture docs or improvement plans
 3. Reads Da Vinci's implementation
 4. Identifies test gaps
 5. Writes missing tests (unit, integration, component, E2E)
 6. Runs all tests
-7. Performs manual code review against 9 audit categories
+7. Performs manual code review against 10 audit categories
 8. Delivers structured report to Da Vinci
 
-**The 9 Audit Categories:**
+**The 10 Audit Categories:**
 1. **Correctness** — Does it match the spec?
 2. **Security** — Injection, auth, secrets, data exposure
 3. **Performance** — N+1 queries, unnecessary re-renders, memory leaks
@@ -150,6 +150,7 @@ plans/
 7. **Responsiveness** — 320px/768px/1024px/1440px breakpoints
 8. **Code Quality** — Type safety, dead code, naming, coupling
 9. **Documentation** — Inline docs, README coverage, ADR freshness
+10. **React Health** — `npx react-doctor@latest` scan, no health score regressions, anti-patterns caught (unstable context, missing keys, useEffect deps), bundle size, accessibility
 
 **Bug Severity — The Scale of Olympus:**
 
@@ -172,11 +173,11 @@ plans/
 
 **Sandboxed permissions:** Can only write test files, can only run test/lint commands. Cannot touch source code.
 
-**Key skills:** `diagnose`, `tdd`, `improve`, `review`, `to-issues`, `caveman`, `handoff`, `zoom-out`
+**Key skills:** `diagnose`, `tdd`, `improve`, `review`, `to-issues`, `caveman`, `handoff`, `zoom-out`, `react-doctor`
 
 ---
 
-## Skills (21 from [@mattpocock/skills](https://github.com/mattpocock/skills))
+## Skills (23 from [@mattpocock/skills](https://github.com/mattpocock/skills))
 
 Skills are reusable instruction sets that agents load on-demand via the `skill` tool.
 
@@ -186,11 +187,13 @@ Skills are reusable instruction sets that agents load on-demand via the `skill` 
 | `diagnose` | Engineering | Structured debugging loop (reproduce → minimise → hypothesise → fix) |
 | `tdd` | Engineering | Test-driven development with red-green-refactor |
 | `prototype` | Engineering | Rapid throwaway proof-of-concepts before committing |
+| `react-doctor` | Engineering | React health scoring, pre-commit guard, accessibility + performance scan |
 | `zoom-out` | Engineering | High-level codebase map when entering unfamiliar code |
 | `improve-codebase-architecture` | Engineering | Systematic architecture refactoring |
 | `triage` | Engineering | Prioritize issues and requirements |
 | `to-issues` | Engineering | Convert specs/bugs into actionable GitHub issues |
 | `to-prd` | Engineering | Convert requirements into Product Requirements Documents |
+| `torpathy` | Engineering | Strategic decision framework — weigh tradeoffs, decide where a fix belongs |
 | `grill-with-docs` | Engineering | Verify designs against existing documentation |
 | `grill-me` | Productivity | Relentless interview about a plan |
 | `review` | In-Progress | Structured code review against specs |
@@ -212,12 +215,14 @@ Skills are reusable instruction sets that agents load on-demand via the `skill` 
 | diagnose | ✓ | ✓ | ✓ |
 | handoff | ✓ | ✓ | ✓ |
 | improve | ✓ | ✓ | ✓ |
+| react-doctor | ✓ | ✓ | ✓ |
 | teach | ✓ | ✓ | |
 | tdd | | ✓ | ✓ |
 | to-issues | | ✓ | ✓ |
 | caveman | | ✓ | ✓ |
 | improve-codebase-architecture | ✓ | | |
 | to-prd | ✓ | | |
+| torpathy | ✓ | | |
 | grill-with-docs | ✓ | | |
 | triage | ✓ | | |
 | write-a-skill | ✓ | | |
@@ -248,7 +253,7 @@ DeepSeek V4 Pro is capped at **300k tokens** (down from 1M) for cost efficiency.
     ├── caveman/SKILL.md
     ├── diagnose/SKILL.md
     ├── tdd/SKILL.md
-    ├── ... (21 total)
+    ├── ... (23 total)
     └── zoom-out/SKILL.md
 ```
 

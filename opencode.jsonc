@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "https://opencode.ai/config.json",
   "enabled_providers": ["opencode-go-zen"],
   "compaction": {
@@ -59,8 +59,9 @@
           "triage": "allow",
           "diagnose": "allow",
           "improve": "allow",
-          "torpathy": "allow",
-          "*": "deny"
+            "torpathy": "allow",
+            "react-doctor": "allow",
+            "*": "deny"
         }
       }
     },
@@ -88,6 +89,7 @@
           "setup-pre-commit": "allow",
           "zoom-out": "allow",
           "improve": "allow",
+          "react-doctor": "allow",
           "*": "deny"
         }
       }
@@ -126,6 +128,7 @@
           "handoff": "allow",
           "zoom-out": "allow",
           "improve": "allow",
+          "react-doctor": "allow",
           "*": "deny"
         }
       }

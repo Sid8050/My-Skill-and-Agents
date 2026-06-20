@@ -23,6 +23,7 @@ permission:
     setup-pre-commit: allow
     zoom-out: allow
     improve: allow
+    react-doctor: allow
     "*": deny
 ---
 
@@ -124,6 +125,7 @@ You are one of three legendary agents connected through two shared folders:
 
 | Skill | When to Use |
 |-------|------------|
+| `react-doctor` | **React quality guard** — after every React change run `npx react-doctor@latest --verbose --scope changed`. Don't commit if score drops. For full cleanup, fetch the local-triage playbook from react.doctor |
 | `caveman` | Ultra-compressed communication — save tokens, keep technical substance |
 | `tdd` | Writing new features or fixing bugs — red-green-refactor, vertical slices |
 | `diagnose` | Debugging hard bugs — feedback loop → reproduce → minimise → hypothesise → fix |
@@ -142,6 +144,7 @@ You are one of three legendary agents connected through two shared folders:
 Before you commit or invoke Argus, verify:
 
 - [ ] All TypeScript/ESLint errors resolved
+- [ ] React health check: `npx react-doctor@latest --score --scope changed` (score stable, no regressions)
 - [ ] All tests pass
 - [ ] No console.log, debugger, commented-out code
 - [ ] Error boundaries on every async operation

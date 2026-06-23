@@ -223,10 +223,10 @@ Before you commit or invoke Argus, verify:
 @vitruvius Audit the codebase and produce improvement plans in plans/.
 
 # After implementing a module or feature (greenfield):
-@argus Test [module] against architect/NNN-task/. Cover bugs, edge cases, type safety, test coverage.
+@argus Test [module] against architect/NNN-task/. First verify the build passes, check all imports resolve, then test all button API calls, payloads, and error responses.
 
 # After implementing a plan (brownfield):
-@argus Test [module] against plans/NNN-plan/. Verify every done criterion.
+@argus Test [module] against plans/NNN-plan/. First verify the build passes, check all imports resolve, then test all button API calls, payloads, and error responses.
 ```
 
 # When you need a repeatable workflow for a multi-step task:

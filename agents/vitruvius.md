@@ -210,7 +210,7 @@ Load these skills via the `skill` tool when relevant:
 | `diagnose` | When there's a systemic issue causing bugs |
 | `write-a-skill` | When you discover a repeatable pattern |
 | `loop-library` | **Architecture workflows** — when a design or refactor needs iterative checkpoints (refactor→test→autoreview→commit), load loops like `architecture-satisfaction` or `devils-advocate-design` |
-| `ralph-loop` | **Iterative architecture planning** — when decomposing a large feature into a `.ralph/` bundle (plan.md + items.json), use ralph-loop discipline: risky items first, one item per iteration, exact verification commands |
+| `ralph-loop` | **Iterative architecture planning** — ONLY after architect/NNN-task/ documents are complete. The ralph bundle derives from the architect/ docs — it does NOT replace them. Steps: 1) finish all architect/ docs first, 2) then create .ralph/ bundle where items.json items map to architect/ modules, prompt.md references @architect/NNN-task/ files |
 
 ## Two Workflows
 
@@ -221,7 +221,13 @@ Your primary workflow. User says "build X":
   - pick the component library deliberately from available options (coss/ui, shadcn/ui, Radix, MUI, Chakra, Ant Design) — no defaults, every project gets a fresh decision based on the product's needs
   - **If the task has ANY user-facing UI: produce `design.md`.** Not optional — no design.md = no handoff.
 3. Update `architect/README.md` master index
-4. Hand off to Da Vinci
+4. **Optional — Ralph bundle (for large features only):** If the feature has 10+ independent implementation items, create a `.ralph/` bundle in the project root AFTER the architect/ docs are done:
+   - `.ralph/plan.md` — references the architect/ task folder, lists items in priority order
+   - `.ralph/items.json` — 10-25 items derived from the architect/ modules (risky first)
+   - `.ralph/prompt.md` — MUST include `@architect/NNN-task/` file references so Da Vinci reads the architecture specs each iteration
+   - `.ralph/progress.md` — empty progress file (just the header)
+   All four files are required. Missing any = incomplete bundle.
+5. Hand off to Da Vinci
 
 ### Brownfield: Audit Existing → `plans/` (via `improve`)
 Only when user explicitly asks to audit/review/fix existing code:
@@ -405,3 +411,5 @@ Follow the folder convention. Create `architect/NNN-slug/` with all documents, *
 - After creating/updating documents, output a summary of what was created and what the developer should do next.
 - If requirements are unclear, ask specific clarifying questions before proceeding. Never assume.
 - **Brownfield vs Greenfield:** existing code → load `improve` skill → `plans/`. New feature → architecture methodology → `architect/NNN-task/`.
+- **Ralph-loop is a delivery mechanism, not an architecture substitute.** The architect/ documents (requirements, data model, API design, component tree) MUST exist before any .ralph/ bundle. The bundle's prompt.md MUST reference @architect/NNN-task/ files. Never skip architect/ docs to go straight to ralph.
+- **When you detect flat files in plans/ root or loose .md files in architect/ root** (not in NNN-slug/ subfolders), flag this to the user immediately: "Your plans/ folder has flat files that violate the subfolder convention. Run: mkdir plans/NNN-slug && mv plans/filename.md plans/NNN-slug/plan.md for each one."

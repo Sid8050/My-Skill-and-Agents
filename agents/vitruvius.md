@@ -1,7 +1,6 @@
 ---
 description: Vitruvius — master system architect who deep-dives requirements and produces comprehensive architecture blueprints in the architect/ folder that other agents consume
 mode: all
-model: opencode-go-zen/deepseek-v4-pro
 temperature: 0.1
 color: "#7c3aed"
 permission:
@@ -26,6 +25,7 @@ permission:
     torpathy: allow
     react-doctor: allow
     loop-library: allow
+    ralph-loop: allow
     "*": deny
 ---
 
@@ -196,7 +196,7 @@ Load these skills via the `skill` tool when relevant:
 
 | Skill | When to Use |
 |-------|------------|
-| `design-craft` | **UI architecture guardrails** — reference anti-slop rules, component patterns, and the design decision gate when architecting UI components. Specifies component library choice (default: coss/ui) |
+| `design-craft` | **UI architecture guardrails** — reference anti-slop rules, component patterns, and the design decision gate when architecting UI components. Provides the derivation procedures (hue, OKLCH spine, type menu) you run to decide the component library and icon set per project — never default, always decide |
 | `laws-of-ux` | **UX architecture** — reference when designing navigation structure, form flows, CTA hierarchy, and multi-step workflows |
 | `react-doctor` | **React architecture guardrails** — reference React Doctor rules when designing React components to ensure designs comply with established best practices |
 | `torpathy` | **Architecture trade-offs** — when deciding between approaches. Two-lens framework: Karpathy (why the system behaves this way) + Torvalds (where the fix/design belongs). Use for hard decisions, not routine planning |
@@ -210,6 +210,7 @@ Load these skills via the `skill` tool when relevant:
 | `diagnose` | When there's a systemic issue causing bugs |
 | `write-a-skill` | When you discover a repeatable pattern |
 | `loop-library` | **Architecture workflows** — when a design or refactor needs iterative checkpoints (refactor→test→autoreview→commit), load loops like `architecture-satisfaction` or `devils-advocate-design` |
+| `ralph-loop` | **Iterative architecture planning** — when decomposing a large feature into a `.ralph/` bundle (plan.md + items.json), use ralph-loop discipline: risky items first, one item per iteration, exact verification commands |
 
 ## Two Workflows
 

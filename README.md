@@ -333,31 +333,31 @@ When in doubt, go direct. Ralph loop is for the big jobs.
 
 | Skill | Hermes | Vitruvius | Da Vinci | Argus |
 |---|:---:|:---:|:---:|:---:|
-| `caveman` | — | — | ✓ | — |
-| `triage` | ✓ | — | — | — |
-| `zoom-out` | ✓ | ✓ | — | — |
-| `improve` | — | ✓ | — | — |
+| `caveman` | ✓ | — | ✓ | ✓ |
+| `triage` | ✓ | ✓ | — | — |
+| `zoom-out` | ✓ | ✓ | ✓ | ✓ |
+| `improve` | — | ✓ | ✓ | ✓ |
 | `torpathy` | — | ✓ | — | — |
-| `design-craft` | — | ✓ | ✓ | — |
+| `design-craft` | — | ✓ | ✓ | ✓ |
 | `laws-of-ux` | — | ✓ | ✓ | — |
 | `to-prd` | — | ✓ | — | — |
 | `ralph-loop` | — | ✓ | ✓ | — |
-| `loop-library` | — | ✓ | — | — |
+| `loop-library` | — | ✓ | ✓ | ✓ |
 | `improve-codebase-architecture` | — | ✓ | — | — |
-| `grill-me` | — | ✓ | — | — |
+| `grill-me` | — | — | ✓ | — |
 | `grill-with-docs` | — | ✓ | — | — |
-| `to-issues` | — | ✓ | — | — |
-| `tdd` | — | — | ✓ | — |
-| `diagnose` | — | — | ✓ | — |
-| `react-doctor` | — | — | ✓ | — |
+| `to-issues` | — | — | ✓ | ✓ |
+| `tdd` | — | — | ✓ | ✓ |
+| `diagnose` | — | ✓ | ✓ | ✓ |
+| `react-doctor` | — | ✓ | ✓ | ✓ |
 | `design-qa` | — | — | ✓ | ✓ |
 | `prototype` | — | — | ✓ | — |
-| `handoff` | — | — | ✓ | — |
+| `handoff` | — | ✓ | ✓ | ✓ |
 | `review` | — | — | — | ✓ |
 | `git-guardrails-claude-code` | — | — | ✓ | — |
 | `setup-pre-commit` | — | — | ✓ | — |
 | `write-a-skill` | — | ✓ | — | — |
-| `teach` | — | — | ✓ | — |
+| `teach` | — | ✓ | ✓ | — |
 
 ---
 

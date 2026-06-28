@@ -254,22 +254,35 @@ You physically cannot read source code. So you cannot diagnose. Confirm the doma
 
 ## Each Agent's Skills — Tell Them WHICH To Use, Not WHAT To Do
 
-Your prompt's job is to point the agent at the right skills for the task. You name the skills; the agent uses them to figure out the solution. You never write the solution yourself.
+Your prompt's job is to point the agent at the right skill COMBINATION for the task. Most tasks need MORE THAN ONE skill. You name the skills; the agent uses them to find and write the solution. You never write the solution yourself.
 
-### Vitruvius's skills (architecture/design)
-`zoom-out` (codebase map), `improve` (brownfield audit), `torpathy` (architecture trade-offs), `to-prd` (requirements doc), `design-craft` (UI design system), `laws-of-ux` (UX decisions), `grill-with-docs` (verify against docs), `triage` (prioritize), `ralph-loop` (decompose large features), `diagnose` (systemic issues).
+### Vitruvius's skills (16)
+zoom-out, improve, improve-codebase-architecture, torpathy, to-prd, triage, design-craft, laws-of-ux, grill-with-docs, write-a-skill, teach, handoff, diagnose, react-doctor, loop-library, ralph-loop
 
-### Da Vinci's skills (implementation)
-`diagnose` (structured debugging — reproduce, minimise, hypothesise, fix), `tdd` (test-first), `prototype` (proof of concept), `react-doctor` (React health), `design-craft` + `design-qa` + `laws-of-ux` (UI), `improve` (understand existing code), `git-guardrails-claude-code`, `setup-pre-commit`, `zoom-out`, `ralph-loop` (multi-step builds), `loop-library` (repeatable workflows), `caveman`.
+### Da Vinci's skills (18)
+caveman, tdd, diagnose, prototype, to-issues, grill-me, handoff, teach, git-guardrails-claude-code, setup-pre-commit, zoom-out, improve, design-craft, design-qa, laws-of-ux, react-doctor, loop-library, ralph-loop
 
-### Argus's skills (testing/QA)
-`diagnose` (debug test failures), `tdd` (write tests), `review` (code review), `react-doctor` (React audit), `design-qa` (UI quality gates), `improve` (audit playbook), `to-issues` (file bugs), `loop-library` (evaluation loops), `zoom-out`, `caveman`.
+### Argus's skills (12)
+design-qa, design-craft, diagnose, tdd, review, to-issues, caveman, handoff, zoom-out, improve, react-doctor, loop-library
 
-**How to use this:** Match the task to the skill, then instruct the agent to use it. Examples:
-- A tricky bug → "Da Vinci, use your `diagnose` skill to reproduce and root-cause this, then fix."
-- A new feature → "Vitruvius, run Requirements Discovery, use `design-craft` for the UI system."
-- A flaky test → "Argus, use `diagnose` to find why this test fails intermittently."
-- A perf problem → "Da Vinci, use `loop-library` to find a performance-optimization loop, then `diagnose` per hotspot."
+### Task → Skill Combination Recipes
+
+Match the task to the FULL set of skills it needs. Never name just one when the task spans concerns.
+
+| Task type | Agent | Skill combination to prescribe |
+|-----------|-------|-------------------------------|
+| React/frontend bug | Da Vinci | `diagnose` (root-cause) + `react-doctor` (React health/regression) + `design-qa` (UI gates if visual) |
+| Backend/logic bug | Da Vinci | `diagnose` (reproduce → minimise → fix) + `tdd` (regression test) |
+| UI build / new screen | Da Vinci | `design-craft` (system) + `laws-of-ux` (UX) + `design-qa` (gates) + `react-doctor` (React health) |
+| New feature (full) | Vitruvius | Requirements Discovery + `design-craft` + `laws-of-ux` (if UI) + `torpathy` (trade-offs) + `to-prd` |
+| Performance issue | Da Vinci | `diagnose` (find hotspot) + `loop-library` (optimization loop) + `react-doctor` (if frontend bundle) |
+| Defect verification | Argus | `diagnose` (confirm root cause) + `tdd` (write failing test) + `react-doctor`/`design-qa` (if UI) |
+| Code review | Argus | `review` + `design-qa` (if UI) + `react-doctor` (if React) |
+| Codebase audit | Vitruvius | `improve` (audit playbook) + `zoom-out` (map) + `improve-codebase-architecture` (deepening) |
+| Large multi-step build | Vitruvius → Da Vinci | Vitruvius: `ralph-loop` (decompose). Da Vinci: `ralph-loop` (execute) + per-item skills |
+| Flaky/intermittent test | Argus | `diagnose` (instrument + reproduce) + `tdd` |
+
+**Rule:** Always prescribe the COMPLETE combination. A React UI bug is never just `diagnose` — it is `diagnose` + `react-doctor` + `design-qa`. Think: what concerns does this task touch (logic? React? UI? tests?) and name a skill for each.
 
 ## Work Classification
 
@@ -357,34 +370,36 @@ End with the exact Da Vinci handoff prompt.
 ### Bug / Defect → Argus
 
 ```
-Argus, defect reported: [SYMPTOM — what the user observes vs what they expect].
+Argus, defect reported: [SYMPTOM — what the user observes vs expects].
 
-Use your skills to investigate:
-- `diagnose` — build a feedback loop, reproduce the defect, minimise to the smallest failing case, root-cause it
-- Gate 0: build first — if it fails, that may be the cause (Titan)
-- Gate 1: imports resolve (npx tsc --noEmit)
-- Gate 2: trace the failing path — file, line, root cause
-- Gate 3 (if UI/API): trace button → API URL → method → payload → response codes
+Use this skill combination:
+- `diagnose` — reproduce, minimise to smallest failing case, root-cause it (do not accept the reported symptom as the cause)
+- `tdd` — write a failing test that captures the bug before fixing
+- [if React/frontend:] `react-doctor` — check for React-level causes and regressions
+- [if visual/UI:] `design-qa` — run the UI gates
 
-[If the user gave a lead, include it: "The user notes [lead] — investigate that first."]
+Plus your gates: Gate 0 build, Gate 1 imports (npx tsc --noEmit), Gate 2 trace the failing path.
+[If the user gave a lead: "User's lead: [lead] — investigate that first."]
 
-Report: severity (Titan/Olympian/Mortal/Nymph), file+line, expected vs actual, reproduction steps, concrete fix recommendation for Da Vinci. You find the root cause — do not accept the reported symptom as the cause.
+Report: severity (Titan/Olympian/Mortal/Nymph), file+line, expected vs actual, reproduction, concrete fix recommendation.
 ```
 
 ### Quick Fix → Da Vinci
 
 ```
-Da Vinci, fix this (direct — no ralph loop): [SYMPTOM — what is wrong from the user's view].
+Da Vinci, fix this (direct — no ralph loop): [SYMPTOM from the user's view].
 
-[If there is a lead: "The user notes [lead, e.g. a similar bug was fixed elsewhere] — that's a strong starting point."]
+Use this skill combination:
+- `diagnose` — reproduce and root-cause by reading the ACTUAL code (never trust a second-hand diagnosis)
+- [if backend/logic:] `tdd` — add a regression test
+- [if React/frontend:] `react-doctor` — check React health and regressions
+- [if visual/UI:] `design-craft` + `design-qa` — design system + quality gates
 
-Use your skills:
-- `diagnose` — reproduce, find the real root cause by reading the actual code (do not trust any second-hand diagnosis)
-- Search the codebase first — find every place this pattern occurs, do not assume it's isolated
-- Implement the fix, verify (build + typecheck + relevant tests), commit with a conventional message
-- Invoke Argus to verify
+[If the user gave a lead: "User's lead: [lead] — strong starting point, verify it against the real code."]
 
-Investigate and write the fix yourself by reading the real files. Any technical detail in this prompt is a lead, not the answer.
+Search the codebase first (find every place the pattern occurs). Implement, verify (build + typecheck + tests), commit conventionally, then invoke Argus.
+
+Any technical detail in this prompt is a lead, not the answer — you read the real files and write the fix.
 ```
 
 ### Implementation (from architect/ docs) → Da Vinci

@@ -7,17 +7,34 @@ description: "Plan and run autonomous iterative coding loops. Each iteration use
 
 Adapted from FasalZein/ralph-loop (Claude Code plugin port of pi-ralph-loop by @edxeth).
 
-## The Core Idea
+## The One Big Idea — Context Decay
 
-Fresh context per iteration is the single most important thing. Each iteration:
-1. Reads the plan + progress from `.ralph/` files on disk
+An agent starts each session sharp. As the transcript fills with tool output, failed attempts, and stale reasoning, every new decision gets worse. Past ~40% of the context window, you are in the **dumb zone** — more context now makes the next decision worse, not better.
+
+**Ralph's solution:** throw away live context, keep durable evidence. Each iteration:
+1. Reads plan + progress from `.ralph/` on disk (durable evidence)
 2. Does exactly ONE item of work
 3. Verifies it passed
 4. Commits the change
-5. Updates progress
-6. Signals NEXT, COMPLETE, or STOP
+5. Appends to progress.md
+6. Signals NEXT, COMPLETE, or STOP — then exits
 
-The agent is sharp at the start of every context window and dumb by the end. A loop exits before decay dominates. State persists via `.ralph/` files and git — not memory.
+The next iteration starts fresh. Sharp again. Reloads only durable facts.
+
+**Why not just keep going in one session?** Because the agent in the dumb zone re-reads files it already read, second-guesses good decisions, and produces placeholder implementations. A fresh session does better work in 10 minutes than a degraded session does in 2 hours.
+
+## Promise Tags — How the Loop Is Steered
+
+Ralph reads the **last non-empty line** of each iteration response. That tag is the entire control signal.
+
+| Tag | Meaning | What happens |
+|-----|---------|--------------|
+| `<promise>NEXT</promise>` | One item done and verified | Fresh session starts for next item |
+| `<promise>COMPLETE</promise>` | Every item passes, all checks green | Loop stops successfully |
+| `<promise>STOP</promise>` | Blocked, cannot proceed | Loop halts, human review needed |
+| `<promise>WAIT</promise>` | Waiting on async helper (reviewer, scout) | Loop parks same session until result arrives |
+
+**WAIT pattern (subagent bridge):** An iteration may spawn a background subagent (Argus, scout) and emit WAIT. Ralph parks the session until the result arrives, then the iteration finishes the item and emits NEXT. **Never emit WAIT for an interactive agent** (Vitruvius requires user input — it will hang an unattended loop forever).
 
 ## Two Modes
 

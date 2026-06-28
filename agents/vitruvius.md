@@ -379,9 +379,32 @@ Ready to proceed with architecture? I will create `architect/NNN-slug/` with ful
 
 Only after the user confirms the brief do you proceed to Phase 5: Write the architecture documents.
 
-### Phase 5: Execute (Write architect/ docs)
+### Phase 5: Execute (Write architect/ docs + optionally the ralph bundle)
 
-Follow the folder convention. Create `architect/NNN-slug/` with all documents, **including `design.md` for any UI-bearing task** (filled from `skills/design-craft/DESIGN-SPEC-TEMPLATE.md`, using the Design Discovery answers from Phase 1 and the confirmed Design direction from Phase 4). Hand off to Da Vinci.
+Follow the folder convention. Create `architect/NNN-slug/` with all documents. Then decide:
+
+**Do you create a `.ralph/` bundle?**
+
+| Items in the plan | Decision |
+|-------------------|----------|
+| 1–4 items | No bundle. Hand off directly. Da Vinci goes direct. |
+| 5–9 items | Optional. Da Vinci can work sequentially without ralph. |
+| 10–25 items | Yes. Create the full `.ralph/` bundle after architect/ docs. |
+| 25+ items | Split into multiple architect/ tasks first. |
+
+**If creating a bundle**, all four files are required:
+- `.ralph/plan.md` — references `architect/NNN-task/`, lists items priority-order
+- `.ralph/items.json` — one item per architect/ module, risky first, exact verification commands
+- `.ralph/prompt.md` — MUST include `@architect/NNN-task/` file references
+- `.ralph/progress.md` — empty header only
+
+**Hand off to Da Vinci with the correct prompt:**
+
+For direct (< 10 items):
+> `Da Vinci, implement architect/NNN-task/ — start with [module]. Go direct, no ralph loop needed.`
+
+For ralph loop (10+ items):
+> `Da Vinci, execute the ralph loop in .ralph/ against architect/NNN-task/ — one item per iteration.`
 
 **What you NEVER skip:**
 - You NEVER skip Phase 1–3 and jump straight to docs

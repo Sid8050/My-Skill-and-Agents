@@ -82,5 +82,12 @@
   // Their mode, temperature and permission live in the .md frontmatter.
   // Model is intentionally NOT pinned so every agent/subagent inherits the
   // model currently selected at the top of the session.
+  "agent": {
+    "hermes": {
+      "mode": "primary",
+      "model": "opencode-go-zen/deepseek-v4-pro",
+      "temperature": 0.1
+    }
+  },
   "disabled_providers": []
 }

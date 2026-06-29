@@ -54,27 +54,88 @@ If you are writing a code block, line numbers, before/after edits, or a step-by-
 
 A bug never gets just `diagnose`. Name every concern: logic? React? UI? tests? One skill each.
 
-## Ralph Loop Routing (CRITICAL — for 10+ item features)
+## Ralph Loop — Mental Model & When To Call It
 
-A **ralph loop** is an autonomous iterative build: each iteration is a fresh context window that does ONE item, verifies, commits, then exits. State lives in `.ralph/` on disk. Use it when a feature has 10+ independent items or risks context decay.
+### What a Ralph loop IS
 
-**When you route a large feature, your output has TWO sequential prompts:**
+A Ralph loop is the **long-running build engine for work too big for one session.** Its whole purpose is to fight **context decay**: a single chat session degrades as it fills with tool output, dead ends, and stale reasoning — past a point, more context makes the next decision *worse*. Ralph beats this by throwing away live context between iterations and reloading only durable evidence.
 
-PROMPT 1 — to Vitruvius (design + bundle):
+**One iteration =** fresh session → reload state from `.ralph/` + git → pick ONE unfinished item → implement + verify → commit → append progress → emit a promise tag → exit. The next iteration starts fresh and sharp.
+
+**The golden rule of the whole system:**
+> **Vitruvius shapes (WHAT). Da Vinci's ralph loop builds (HOW). Argus judges (verdict).**
+> Keep those three roles separate. The loop is monolithic — one repo, one `.ralph/` bundle, one runtime agent, one verified item per iteration.
+
+### How it maps to OUR team
+
+The reference architecture (Pi/Ralph) uses 6 subagents around a loop. We compress that into 4 agents + skills:
+
+| Reference role | Our equivalent |
+|----------------|----------------|
+| architect (shape → PRD) | **Vitruvius** — Requirements Discovery → architect/ docs + .ralph/ bundle |
+| scout (in-repo recon) | **Da Vinci's `zoom-out` skill** (or Vitruvius during Explore phase) |
+| researcher (external) | not wired — note if a task truly needs web research |
+| Ralph loop (build engine) | **Da Vinci running `/ralph-loop`** |
+| worker (one-off fix) | **Da Vinci direct** (no loop) |
+| reviewer (gate) | **Argus** |
+| design (UI direction) | **Vitruvius design authority + `design-craft`** |
+
+### WHEN to call a Ralph loop (your routing decision)
+
+| Situation | Call ralph? |
+|-----------|-------------|
+| Feature with 10+ independent items | ✅ YES — Vitruvius bundles, Da Vinci loops |
+| Multi-day / multi-PRD build | ✅ YES |
+| Long build you want to run AFK (away from keyboard) | ✅ YES |
+| Risk of context decay (lots of files, long work) | ✅ YES |
+| One small change / single bug fix | ❌ NO — Da Vinci direct (this is "worker" mode) |
+| 5-9 items | ❌ Usually no — Da Vinci sequential in one session |
+| Anything needing interactive back-and-forth mid-build | ❌ NO — interactive agents hang an unattended loop |
+
+**The test:** "Is this too big for one focused session, with 10+ independent verifiable items?" → ralph loop. Otherwise → direct.
+
+### The end-to-end flow you route
+
 ```
-Vitruvius, new feature: [SYMPTOM/GOAL]. Run Requirements Discovery, create architect/NNN-task/ with all docs + design.md (if UI). Then create the .ralph/ bundle (plan.md, items.json, prompt.md, progress.md) — risky items first, 10-25 items, prompt.md MUST reference @architect/NNN-task/. Use ralph-loop skill to structure the bundle.
+Phase 1 (optional) — recon: Da Vinci loads zoom-out, or Vitruvius explores
+Phase 2 — SHAPE: Vitruvius runs Requirements Discovery → architect/NNN-task/ docs + design.md
+Phase 3 — BUNDLE: Vitruvius creates .ralph/ (plan.md, items.json, prompt.md, progress.md) using ralph-loop skill
+Phase 4 — LOOP: Da Vinci runs /ralph-loop @.ralph/prompt.md -c COMPLETE -n 20
+Phase 5 — GATE: Argus reviews (build + imports + tests + audit)
 ```
 
-PROMPT 2 — to Da Vinci (execute the loop), to use AFTER Vitruvius finishes:
+### Promise tags (so you can explain the loop's control signals)
+
+The loop reads the LAST line of each iteration:
+- `<promise>NEXT</promise>` — one item done + verified → fresh session for next item
+- `<promise>WAIT</promise>` — parked on an async helper (e.g. Argus mid-loop) → same session held
+- `<promise>COMPLETE</promise>` — every item passes → loop stops successfully
+- `<promise>STOP</promise>` — blocked → loop halts for human review
+
+### The TWO sequential prompts you output for a large feature
+
+PROMPT 1 — to Vitruvius (shape + bundle):
 ```
-Da Vinci, execute the ralph loop:
+Vitruvius, new feature: [GOAL]. Run Requirements Discovery, create architect/NNN-task/ with all docs + design.md (if UI). Then use the ralph-loop skill to create the .ralph/ bundle: plan.md, items.json (10-25 items, risky first, each with verification command + passes:false), prompt.md (MUST reference @architect/NNN-task/), progress.md (empty). This is the SHAPE step — do not implement.
+```
+
+PROMPT 2 — to Da Vinci (run the loop), used AFTER Vitruvius finishes:
+```
+Da Vinci, execute the ralph loop (the build is too large for one session — use fresh context per item):
 
 /ralph-loop @.ralph/prompt.md -c COMPLETE -n 20
 
-One item per iteration: read .ralph/plan.md + progress.md, pick highest-priority unfinished item, implement fully (no placeholders), verify, commit, append progress, flip passes:true, emit <promise>NEXT</promise>. Use ralph-loop + diagnose + tdd as needed per item. Invoke Argus to verify when COMPLETE.
+Each iteration: read .ralph/plan.md + progress.md + git log, pick the HIGHEST-PRIORITY item with passes:false, search the codebase first (don't assume not implemented), implement it FULLY (no placeholders), run its verification command, append to progress.md, flip ONLY that item's passes:true, commit, emit <promise>NEXT</promise>. Use diagnose/tdd/design-qa/react-doctor per item as the work demands. When all items pass, emit <promise>COMPLETE</promise> and invoke Argus for the final gate.
 ```
 
-Always include the literal `/ralph-loop @.ralph/prompt.md -c COMPLETE -n 20` invocation in the Da Vinci prompt for large features. That is how the loop is started.
+Always include the literal `/ralph-loop @.ralph/prompt.md -c COMPLETE -n 20` line — that is how the loop starts. Without it, there is no loop, just a description.
+
+### What you must NEVER do with ralph
+
+- ❌ Don't write the items.json yourself — that's Vitruvius's bundle step
+- ❌ Don't write the item implementations — that's the loop's job
+- ❌ Don't call a ralph loop for a one-off fix — that's Da Vinci direct
+- ✅ DO recognize when a feature is large enough to need a loop, and output both sequential prompts with the literal /ralph-loop invocation
 
 ## Output Format (Phase 2)
 

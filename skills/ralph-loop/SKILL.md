@@ -91,37 +91,85 @@ No placeholders. Full implementations.
 ```markdown
 @.ralph/plan.md @.ralph/progress.md
 
-You are in a Ralph loop. Each iteration is a fresh context window.
+You are a ralph-loop worker. Implement ONE item per invocation.
 
 1. Read .ralph/plan.md and .ralph/progress.md to orient
-2. Run: git log --oneline -10
-3. Choose the HIGHEST PRIORITY item whose passes is false
-4. Before changing anything: search the codebase — do not assume not implemented
-5. Implement exactly ONE item fully — no placeholders, no shortcuts, no stubs
-6. Run verification commands. If they fail, fix before continuing.
+2. Read .ralph/items.json — find the HIGHEST PRIORITY item where "passes": false
+3. Before changing anything: search the codebase — do not assume not implemented
+4. Implement exactly ONE item fully — no placeholders, no shortcuts, no stubs
+5. Run verification commands from plan.md. If they fail, fix before continuing.
+6. In .ralph/items.json flip ONLY that item's "passes" to true
 7. Append to .ralph/progress.md what you did, decisions made, files changed
-8. In .ralph/items.json flip ONLY that item's "passes" to true
-9. git add changed files, git commit with descriptive message
+8. git add changed files, git commit with descriptive message
 
-ONE item per iteration. Do NOT skip ahead.
+ONE item per invocation. Do NOT skip ahead.
 
-Emit EXACTLY ONE control tag as the LAST line:
-  <promise>NEXT</promise>     — one item completed
-  <promise>COMPLETE</promise> — every item passes
-  <promise>STOP</promise>     — blocked, cannot proceed
+Return EXACTLY one verdict as your final line:
+  VERDICT: DONE
+  VERDICT: BLOCKED — [reason]
+  VERDICT: FAILED — [reason]
 ```
 
 **Step 2: Show the plan to the user and get approval.**
 
 **Step 3: Run the loop**
 
-Option A — Using the ralph.sh script (if available):
+Option A — Headless subagent loop (OpenCode default, RECOMMENDED):
+
+Da Vinci acts as the **loop controller** — not the worker. For each incomplete item in `.ralph/items.json`, Da Vinci:
+
+1. Reads the `.ralph/` bundle to construct a tight, self-contained prompt for one item
+2. Spawns `ralph-worker` (a headless subagent) with `@task(type=general)` using the worker prompt template below
+3. Waits for the worker's verdict (DONE / BLOCKED / FAILED)
+4. Updates `.ralph/progress.md` with the outcome
+5. Moves to the next item — Da Vinci's session stays lean, no context accumulation
+
+```
+Da Vinci session (controller — always sharp):
+    for item in items.json where passes == false:
+        prompt = build_worker_prompt(item, plan.md, progress.md)
+        result = spawn ralph-worker(prompt)      ← fresh 300k context
+        update progress.md with result
+        if BLOCKED or FAILED: escalate to user
+        else: NEXT
+```
+
+The `.ralph/prompt.md` template for the worker:
+
+```markdown
+@.ralph/plan.md @.ralph/progress.md
+
+You are a ralph-loop worker — implement ONE item and return a verdict.
+
+ITEM: [item description from items.json]
+STEPS: [concrete steps from items.json]
+VERIFY: [verification command from plan.md]
+
+Protocol:
+1. Read .ralph/plan.md and .ralph/progress.md
+2. Search the codebase before creating anything — do not assume
+3. Implement the item above FULLY — no placeholders, no TODOs, no stubs
+4. Run the verification command. If it fails, fix before continuing.
+5. git add only changed files; git commit with: type(scope): [item description]
+6. Append to .ralph/progress.md: what you did, decisions made, files changed
+7. Return EXACTLY one verdict as your final line:
+   VERDICT: DONE
+   VERDICT: BLOCKED — [reason]
+   VERDICT: FAILED — [reason]
+
+ONE item. No skipping ahead. No bonus work.
+```
+
+**Why this is the default:** Each item gets a fresh 300k context window. No context decay. No dumb zone. The worker is lean — no Olympus protocol, no team ceremonies, just implementation discipline. Da Vinci stays sharp as the controller, never entering the implementation weeds.
+
+Option B — Manual loop within this session (legacy, for <5 items only):
+
+Da Vinci reads `.ralph/plan.md` and `.ralph/items.json`, then follows the iteration protocol — one item at a time, verifying, committing, updating progress — until all items pass or a blocker is hit. **Warning: after 5+ items, context decay degrades quality. Prefer Option A.**
+
+Option C — Using the ralph.sh script (Claude Code only, not available in OpenCode):
 ```bash
 bash ~/.config/opencode/skills/ralph-loop/scripts/ralph.sh @.ralph/prompt.md -c COMPLETE -n 20
 ```
-
-Option B — Manual loop within this session (Da Vinci's default):
-Da Vinci reads `.ralph/plan.md` and `.ralph/items.json`, then follows the iteration protocol above — one item at a time, verifying, committing, updating progress — until all items pass or a blocker is hit.
 
 ### Mode 2 — Direct loop (quick tasks)
 
@@ -166,11 +214,11 @@ bash ~/.config/opencode/skills/ralph-loop/scripts/ralph.sh @.ralph/prompt.md -c 
 
 ## OpenCode vs Claude Code
 
-ralph.sh uses `claude-ralph` (Claude Code's CLI subprocess runner). In OpenCode:
-- Da Vinci can follow the ralph-loop protocol **manually within his session** — same discipline, same structure, same `.ralph/` state files
-- For autonomous background looping: use `opencode` CLI if it supports headless mode, or run ralph.sh with the `CLAUDE_RALPH_PATH` env pointing to any compatible CLI
+- **Claude Code:** Uses `ralph.sh` with `claude-ralph` subprocess runner for headless iteration.
+- **OpenCode:** Uses `ralph-worker` subagent spawned via `@task`. Da Vinci acts as loop controller — constructs prompts, spawns workers, tracks progress. Each worker starts fresh with no context decay. The `.ralph/` bundle format is identical across both platforms.
+- **Promise tags** (NEXT/COMPLETE/STOP) are replaced with **verdicts** (DONE/BLOCKED/FAILED) since the subagent returns a result directly to Da Vinci rather than signaling to a shell harness.
 
-See `scripts/ralph.sh` for the full loop harness (idle watchdog, promise gating, retry logic).
+See `scripts/ralph.sh` for the Claude Code loop harness (idle watchdog, promise gating, retry logic).
 
 ## Writing Perfect Loops
 

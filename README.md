@@ -16,13 +16,14 @@ That's it. Open OpenCode and your four-agent team is ready.
 
 ---
 
-## The Olympus Team — Four Agents
+## The Olympus Team — Five Agents
 
 | Agent | Name | Inspiration | Model | Mode | Role |
 |---|---|---|---|---|---|
 | **Hermes** | The Dispatcher | Hermes — messenger of the gods | deepseek-v4-pro | primary | Receives any raw request, questions the user, reads the codebase, produces the exact optimized prompt for the right agent |
 | **Vitruvius** | The Architect | Marcus Vitruvius Pollio | deepseek-v4-pro | all | Requirements Discovery → `architect/` blueprints + `design.md` + `.ralph/` bundle |
 | **Da Vinci** | The Maker | Leonardo da Vinci | deepseek-v4-pro | primary | Reads `architect/` or `plans/` → implements flawlessly → invokes Argus |
+| **Designer** | The UI/UX Agent | Senior product designer | deepseek-v4-pro | primary | Information architecture → design tokens → navigation → polished UI with dark/light parity, full state coverage, and a scored design review |
 | **Argus** | The Watcher | Argus Panoptes | glm-5.2 | subagent | Build gates → import checks → API payload verification → 11-category audit |
 
 ---
@@ -267,12 +268,13 @@ When in doubt, go direct. Ralph loop is for the big jobs.
 
 ---
 
-## Skills (27+)
+## Skills (28+)
 
 ### Design
 
 | Skill | What It Does |
 |---|---|
+| `designer` | Premium UI/UX standard — design-before-coding protocol, design tokens, dark mode surface ladder, navigation IA, data-dense tables, forms, full state coverage, and a scored design review |
 | `design-craft` | Universal design principles — typography, color, spacing, animation, layout, interaction |
 | `design-qa` | 11-gate UI quality checklist — accessibility, consistency, performance, responsive |
 | `laws-of-ux` | User psychology rules — cognitive load, attention, memory, motor cost, mental models |
@@ -331,15 +333,16 @@ When in doubt, go direct. Ralph loop is for the big jobs.
 
 ## Skill-to-Agent Mapping
 
-| Skill | Hermes | Vitruvius | Da Vinci | Argus |
-|---|:---:|:---:|:---:|:---:|
-| `caveman` | ✓ | — | ✓ | ✓ |
-| `triage` | ✓ | ✓ | — | — |
-| `zoom-out` | ✓ | ✓ | ✓ | ✓ |
-| `improve` | — | ✓ | ✓ | ✓ |
-| `torpathy` | — | ✓ | — | — |
-| `design-craft` | — | ✓ | ✓ | ✓ |
-| `laws-of-ux` | — | ✓ | ✓ | — |
+| Skill | Hermes | Vitruvius | Da Vinci | Designer | Argus |
+|---|:---:|:---:|:---:|:---:|:---:|
+| `caveman` | ✓ | — | ✓ | ✓ | ✓ |
+| `triage` | ✓ | ✓ | — | — | — |
+| `zoom-out` | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `improve` | — | ✓ | ✓ | — | ✓ |
+| `torpathy` | — | ✓ | — | — | — |
+| `designer` | — | — | — | ✓ | — |
+| `design-craft` | — | ✓ | ✓ | ✓ | ✓ |
+| `laws-of-ux` | — | ✓ | ✓ | ✓ | — |
 | `to-prd` | — | ✓ | — | — |
 | `ralph-loop` | — | ✓ | ✓ | — |
 | `loop-library` | — | ✓ | ✓ | ✓ |
@@ -403,11 +406,18 @@ Replace `baseURL` and `apiKey` with your own values. The proxy handles routing t
 │   ├── hermes.md
 │   ├── vitruvius.md
 │   ├── da-vinci.md
+│   ├── designer.md
 │   └── argus.md
-└── skills/          (27+ directories)
+└── skills/          (28+ directories)
     ├── caveman/
     ├── design-craft/
     ├── design-qa/
+    ├── designer/
+    │   ├── SKILL.md
+    │   └── references/
+    │       ├── design-system.md
+    │       ├── patterns.md
+    │       └── review.md
     ├── diagnose/
     ├── git-guardrails-claude-code/
     ├── grill-me/

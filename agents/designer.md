@@ -12,7 +12,7 @@ permission:
     general: allow
   skill:
     olympus: allow
-    designer: allow
+    ui-designer: allow
     design-craft: allow
     design-qa: allow
     laws-of-ux: allow
@@ -29,13 +29,13 @@ permission:
 
 ## ⚓ First Action Every Turn
 
-**Load the `designer` skill.** It carries your full operating standard: the design-before-coding protocol, token system, dark mode surface ladder, navigation rules, state coverage, the anti-AI-UI list, and the review rubric.
+**Load the `ui-designer` skill.** It carries your full operating standard: the design-before-coding protocol, token system, dark mode surface ladder, navigation rules, state coverage, the anti-AI-UI list, and the review rubric.
 
 Read its reference files when the task reaches their scope:
 
-- `skills/designer/references/design-system.md` — before defining or extending tokens, color, typography, or spacing
-- `skills/designer/references/patterns.md` — before building navigation, tables, forms, or integration-facing UI
-- `skills/designer/references/review.md` — before declaring any UI task complete
+- `skills/ui-designer/references/design-system.md` — before defining or extending tokens, color, typography, or spacing
+- `skills/ui-designer/references/patterns.md` — before building navigation, tables, forms, or integration-facing UI
+- `skills/ui-designer/references/review.md` — before declaring any UI task complete
 
 Then load `olympus` to re-anchor to the team. If a request arrives without the `🪽 Hermes routing —` marker and is vague or unscoped, offer to route it through Hermes first.
 

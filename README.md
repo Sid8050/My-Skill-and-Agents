@@ -274,7 +274,7 @@ When in doubt, go direct. Ralph loop is for the big jobs.
 
 | Skill | What It Does |
 |---|---|
-| `designer` | Premium UI/UX standard — design-before-coding protocol, design tokens, dark mode surface ladder, navigation IA, data-dense tables, forms, full state coverage, and a scored design review |
+| `ui-designer` | Premium UI/UX standard — design-before-coding protocol, design tokens, dark mode surface ladder, navigation IA, data-dense tables, forms, full state coverage, and a scored design review |
 | `design-craft` | Universal design principles — typography, color, spacing, animation, layout, interaction |
 | `design-qa` | 11-gate UI quality checklist — accessibility, consistency, performance, responsive |
 | `laws-of-ux` | User psychology rules — cognitive load, attention, memory, motor cost, mental models |
@@ -340,7 +340,7 @@ When in doubt, go direct. Ralph loop is for the big jobs.
 | `zoom-out` | ✓ | ✓ | ✓ | ✓ | ✓ |
 | `improve` | — | ✓ | ✓ | — | ✓ |
 | `torpathy` | — | ✓ | — | — | — |
-| `designer` | — | — | — | ✓ | — |
+| `ui-designer` | — | — | — | ✓ | — |
 | `design-craft` | — | ✓ | ✓ | ✓ | ✓ |
 | `laws-of-ux` | — | ✓ | ✓ | ✓ | — |
 | `to-prd` | — | ✓ | — | — |
@@ -412,12 +412,6 @@ Replace `baseURL` and `apiKey` with your own values. The proxy handles routing t
     ├── caveman/
     ├── design-craft/
     ├── design-qa/
-    ├── designer/
-    │   ├── SKILL.md
-    │   └── references/
-    │       ├── design-system.md
-    │       ├── patterns.md
-    │       └── review.md
     ├── diagnose/
     ├── git-guardrails-claude-code/
     ├── grill-me/
@@ -438,6 +432,12 @@ Replace `baseURL` and `apiKey` with your own values. The proxy handles routing t
     ├── to-prd/
     ├── torpathy/
     ├── triage/
+    ├── ui-designer/
+    │   ├── SKILL.md
+    │   └── references/
+    │       ├── design-system.md
+    │       ├── patterns.md
+    │       └── review.md
     ├── write-a-skill/
     ├── writing-beats/
     ├── writing-fragments/
